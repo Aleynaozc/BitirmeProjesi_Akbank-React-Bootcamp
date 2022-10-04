@@ -8,10 +8,11 @@ import { faEye, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faComment, faSquareCheck, faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 
 const Card = (props) => {
+    const { id, title, date, tasks, labels } = props.card;
     return (
         
-        <div div className='todo_list_container' >
-            <FontAwesomeIcon icon={faSquareMinus} className="closeBtn" />
+        <div div className='todo_list_container'  >
+            <FontAwesomeIcon icon={faSquareMinus} className="closeBtn" onClick={() => props.removeCard(id)} />
             {
                 props.card?.labels?.map((item, index) =>
                     <Label text={item.text}

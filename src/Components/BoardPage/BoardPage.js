@@ -10,7 +10,10 @@ import Board from '../Board/Board';
 const BoardPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [boards, setBoards] = useState([])
-
+  const [targetCard, setTargetCard] = useState({
+    boardId: "",
+    cardId: "",
+  });
 
   //Creat Unique ID
   const uniqueIdGenerator = () => {
@@ -61,33 +64,53 @@ const BoardPage = () => {
 
   }
 
-  const removeCard = (boardId, cardId) => {
-
-    //Find the board of the card to be deleted.
-    const findBoardIndex =
-      boards.findIndex((board) =>
-        board.id === boardId
-      )
-    // Find the index of the card to be deleted
-    const deletedCardIndex =
-      boards[findBoardIndex].cards.findIndex((card) =>
-        card.id === cardId
-      )
-
-    const newCardList =
-      boards[findBoardIndex].cards[deletedCardIndex].filter((cards) => cards.id !== cardId);
-
+  const removeCard = (cardId) => {
+    const newCardList = boards.map((i) => {
+      i.cards = i.cards.filter((item) => item.id !== cardId)
+      return i
+    })
     setBoards(newCardList);
-
   }
 
   useEffect(() => {
     localStorage.setItem("BoardsList", JSON.stringify(boards));
   }, [boards]);
 
-  const onDragEnd = result => {
-    console.log(result)
+  const onDragEntered = (boardId, cardId) => {
+    if (targetCard.cardId === cardId) return;
+    setTargetCard({
+      boardId,
+      cardId,
+    });
   }
+console.log(boards)
+  const onDragEnd = result => {
+    if (!result.destination) return
+
+    const { source, destination } = result
+
+    if (source.droppableId !== destination.droppableId) {
+        const sourceColIndex = boards.findIndex(e => e.id === Number(source.droppableId))
+        const destinationColIndex = boards.findIndex(e =>e.id === Number(destination.droppableId))
+
+        const sourceCol = boards[sourceColIndex]
+        const destinationCol = boards[destinationColIndex]
+       console.log(sourceCol)
+        const sourceTask = [...sourceCol.cards]
+        const destinationTask = [...destinationCol.cards]
+
+        const [removed] = sourceTask.splice(source.index, 1)
+        destinationTask.splice(destination.index, 0, removed)
+
+        boards[sourceColIndex].cards = sourceTask
+        boards[destinationColIndex].cards = destinationTask
+
+        setBoards(boards)
+    }
+}
+
+
+
   return (
     <>
       <div className="addList_btn_box">
@@ -104,7 +127,9 @@ const BoardPage = () => {
 
 
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}
+       
+      >
 
 
         <div className='add-list__container'>
@@ -115,18 +140,24 @@ const BoardPage = () => {
               droppableId={String(board.id)}>
               {(provided) => (
                 <div
-              className=""
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              <Board
-                key={boards.id}
-                boards={board}
-                setBoards={setBoards}
-                addCard={handleAddCard}
-                removeBoard={removeBoard} />
-            </div>
-              )}
+                  className=""
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  <Board
+                    key={boards.id}
+                    boards={board}
+                    setBoards={setBoards}
+                    addCard={handleAddCard}
+                    removeBoard={removeBoard}
+                    removeCard={removeCard}
+                  />
+                      {provided.placeholder}
+                </div>
+              
+              )
+              }
+             
             </Droppable>
 
           ))}
