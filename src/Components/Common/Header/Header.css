@@ -1,0 +1,110 @@
+.header_rentacar {
+    position: sticky;
+   
+    padding: 10px;
+    top: 0 !important;
+    background-image: linear-gradient(to right, #9aaeef, #ba9defd6, #8160bd);
+    z-index: 99999;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: 600;
+   
+}
+
+.link_style {
+    text-decoration: none;
+}
+.chart_icon{
+    margin-right: 10px;
+}
+.boards_btn {
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 20px;
+    border:none;
+    background-color: #2f1a57;
+    padding: 5px;
+    color: white;
+    width: 120px;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+}
+.boards_btn::before {
+    transform: scaleX(0);
+    transform-origin: bottom left;
+}
+
+.boards_btn:hover::before {
+    transform: scaleY(1);
+
+    transform-origin: bottom left;
+
+}
+
+.boards_btn:hover {
+    color: #4d175c;
+
+
+}
+
+.boards_btn::before {
+    content: " ";
+    position: absolute;
+    inset: 0 0 0 0;
+    background-image: linear-gradient(to right, #9aaeef, #ba9defd6, #8160bd);
+    z-index: -1;
+    transition: .3s ease;
+    border-radius: 10px;
+}
+.board__title{
+    border:none;
+    background-color: #2f1a57;
+    border-radius: 10px;
+    padding: 10px;
+    color:white;
+}
+
+.editTitleInput{
+    border-radius: 10px;
+    border:none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* background-color: #776da9; */
+    background-image: linear-gradient(to right, #9db0ed, #8160bd);
+    color:white;
+    animation: mymove 1s ease-in;
+    width: 200px;
+}
+.editTitleInput:focus{
+  outline:none;
+}
+
+.logout_btn {
+    font-size: 17px;
+    color:rgb(238, 236, 236);
+    font-weight: 600;
+    border: none;
+    background-color: transparent;
+    margin-right: 30px;
+}
+.logout_btn:hover {
+    color:#860cac;
+}
+.check_icon{
+    position: absolute;
+    left: 810px;
+    top:18px;
+    color:#5b34a3;
+    cursor: pointer;
+}
+.edit_icon{
+    font-size:13px;
+    margin-right: 10px;
+}
+@keyframes mymove {
+    0% {width: 0px; }
+    100%  {width: 200px;}
+  }

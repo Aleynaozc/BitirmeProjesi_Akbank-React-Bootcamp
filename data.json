@@ -1,0 +1,29 @@
+{
+  "Board": [
+    {
+      "id": 2,
+      "title": "Eğitim",
+      "cards": [
+        {
+          "id": 2,
+          "maintitle": "Matematik",
+          "desc": "100 soru çözülecek.",
+          "date":"",
+          "checkList":[],
+          "labels": [
+            {
+              "text": "design",
+              "color": "blue"
+            }
+          ],
+          "comment": [
+            {
+              "id": "2",
+              "text": "naber"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

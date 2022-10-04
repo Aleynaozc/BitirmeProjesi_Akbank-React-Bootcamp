@@ -1,0 +1,43 @@
+.add_todo__container{
+    width: 270px;
+    max-height: 180px;  
+    background-color: aliceblue;
+    border-radius: 30px;
+    padding:50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+ .inputbox input {
+    position: relative;
+    width: 170px;
+    border: 2px solid rgb(58, 104, 126);
+    outline: none;
+    background: none;
+    padding: 3px;
+    border-radius: 10px;
+    font-size: 1em;
+    color:rgb(126, 51, 169);
+  }
+   .inputbox:last-child {
+    margin-bottom: 0;
+  }
+   .inputbox span {
+    
+   
+    font-size: 1em;
+    transition: 0.6s;
+    font-family: sans-serif;
+    color: rgb(126, 51, 169);
+  }
+ 
+.add_todo_button{
+    margin-top: 20px;
+    border:none;
+    padding: 4px;
+    background-color: #4e54c8;
+    border-radius: 20px;
+    width: 100px;
+    color:white;
+}

@@ -1,0 +1,82 @@
+.todo_list_container{
+    margin-top: 30px;
+    background-color: rgb(228, 226, 197);
+    border-radius: 10px;
+    padding:15px;
+}
+.todo_list_main_title{
+    border-bottom: 1px solid black;
+}
+.icon_paperclip{
+    float: right;
+    cursor: pointer;
+}
+.icon{
+    cursor: pointer;
+}
+.modal-header{
+    background-color: #8160bd;
+}
+.todo_modal_container{
+    margin-top: 40px;
+    width: 700px;
+}
+.modal_title_icon{
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 23px;
+    color:white;
+
+}
+.title__container input {
+border:1px solid black;
+border-radius: 4px;
+padding:10px;
+}
+.title__container span {
+    background-color: rgb(255, 255, 255);
+     position: relative;
+     top:12px;
+     left:20px;
+}
+.btn-primary{
+    background-color: #8160bd!important;
+}
+.desc_inp{
+    width: 765px;
+    height: 100px;
+    margin-top: 30px;
+}
+.comment_container{
+    display: flex;
+    margin-top: 30px;
+    
+}
+.comment_textarea{
+    width: 765px;
+}
+.card_footer{
+    display: flex;
+}
+.date_of_todo{
+    background-color: #8160bd;
+    padding:5px;
+    margin-right: 10px;
+ 
+    
+ 
+}
+.compeleted_todo{
+    background-color: gray;
+    min-width: 50px;
+}
+.date_of_todo,.compeleted_todo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    font-size:13px;
+    border-radius: 15px;
+    color: white;
+}
