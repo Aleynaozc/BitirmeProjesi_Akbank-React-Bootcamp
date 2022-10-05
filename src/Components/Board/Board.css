@@ -19,7 +19,7 @@
   margin-right: 10px;
   margin-left: 4px;
   border-radius: 10px;
-  max-height: 100%;
+  
 
 }
 .addacard_body{
@@ -37,8 +37,8 @@
   
 }
 
-.board .card-title {
-  margin-top: 20px;
+.deleteBoard .card-title {
+  margin-top: 0px;
   width: 250px;
   white-space: nowrap;
   overflow: hidden;
@@ -47,9 +47,10 @@
 }
 
 .board-body {
-  margin-top: 14px;
+  margin-top: 25px;
   max-height: 518px;
   padding: 10px;
   border-bottom: 1px solid black;
   overflow-y: auto;
+  overflow-x: hidden;
 }

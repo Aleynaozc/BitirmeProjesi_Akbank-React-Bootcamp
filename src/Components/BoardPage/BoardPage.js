@@ -14,7 +14,7 @@ const BoardPage = () => {
   const uniqueIdGenerator = () => {
     return Math.floor(Math.random() * 100000 + 1);
   };
-
+  
   // ADD BOARD
   const handleAddBoard = (title) => {
     setBoards([
@@ -52,7 +52,7 @@ const BoardPage = () => {
       ))
   }
 
-
+  
   const removeBoard = (boardId) => {
 
     const newList = boards.filter((item) => item.id !== boardId);
@@ -83,7 +83,7 @@ const BoardPage = () => {
 
         const sourceCol = boards[sourceColIndex]
         const destinationCol = boards[destinationColIndex]
-       console.log(sourceCol)
+    
         const sourceTask = [...sourceCol.cards]
         const destinationTask = [...destinationCol.cards]
 

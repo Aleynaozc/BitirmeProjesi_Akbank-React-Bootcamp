@@ -15,7 +15,7 @@ const Board = (props) => {
   return (
     <>
       <div className="board">
-        <div
+      <div
           className='deleteBoard'
           onClick={() => props.removeBoard(props.boards?.id)}>
           <FontAwesomeIcon
@@ -23,6 +23,8 @@ const Board = (props) => {
             className="closeBtn" />
         </div>
         <h5 className="card-title">{props.boards?.title}</h5>
+        <div className='board-body  custom-scroll'>
+       
         {props.boards?.cards?.map((card, index) => (
           <Draggable
             
@@ -40,13 +42,14 @@ const Board = (props) => {
                   ...provided.draggableProps.style,
                   opacity: snapshot.isDragging ? '0.5' : '1'
                 }}
-                className='todo_list_container'
+                className='todo_list_container custom-scroll'
               >
                 <Card
                   key={card.id}
                   boardId={props.boards.id}
                   card={card}
                   removeCard={props.removeCard}
+                  
 
                 />
               </div>
@@ -56,6 +59,7 @@ const Board = (props) => {
           </Draggable>
  
         ))}
+             </div>
         <div className='addacard_body'>
         <AddTitleBtn
           text="+ Add Card"
@@ -63,7 +67,7 @@ const Board = (props) => {
           placeholder="Enter Card Title"
         />
         </div>
-       
+   
       </div>
 
 

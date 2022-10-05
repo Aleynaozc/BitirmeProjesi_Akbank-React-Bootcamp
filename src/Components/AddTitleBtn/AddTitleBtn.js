@@ -37,13 +37,15 @@ const AddTitleBtn = (props) => {
                             className='add-todo-title_btn'
 
                         >
-                            {props.buttonText|| "Add"}
+                            {props.buttonText || "Add"}
                         </button>
 
                         {/* Cancel Button */}
                         <button
                             type="submit"
-                            className='add-todo-title_btn'
+                            className={`add-todo-title_btn ${props.displayButtonClass ? props.displayButtonClass : ""
+                                }`}
+
                             style={{ background: "red" }}
                             onClick={() => setShowAddTitleBtn(false)}>
                             <FontAwesomeIcon icon={faXmark} />
@@ -52,11 +54,12 @@ const AddTitleBtn = (props) => {
                     </form>
                 )
                     : (
-                        <button onClick={() => setShowAddTitleBtn(true)} className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
+                        <p onClick={() => setShowAddTitleBtn(true)} className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
                             }`}>
 
-                            <span className='card-title'>  {props.text}</span>
-                        </button>
+                            <span className={`card-title ${props.displayTextClass ? props.displayTextClass : ""
+                                }`}>{props.text}</span>
+                        </p>
                     )
 
             }

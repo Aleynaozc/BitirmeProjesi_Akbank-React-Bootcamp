@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import '../Board/BoardModal.css'
-const CardModal = (props) => {
+const ListModal = (props) => {
 
   const [inputText, setInputText] = useState("");
   const submission = (e) => {
@@ -38,4 +38,4 @@ const CardModal = (props) => {
 
 }
 
-export default CardModal
+export default ListModal

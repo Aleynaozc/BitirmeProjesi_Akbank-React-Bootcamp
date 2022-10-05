@@ -1,5 +1,5 @@
 .todo_list_container {
-  margin-top: 30px;
+  margin-top: 10px;
   background-color: rgb(228, 226, 197);
   border-radius: 10px;
   padding: 10px;
@@ -35,7 +35,11 @@
   color: white;
 
 }
-
+.hr_style{
+  width: 50px;
+  height:5px;
+  border-radius: 10px;
+}
 .TodoModal_box {
   width: 100%;
   display: flex;
@@ -47,6 +51,7 @@
 .TodoModal_box_title {
   display: flex;
   gap: 10px;
+  
   align-items: center;
 }
 
@@ -174,4 +179,30 @@
 
 .modal-sm {
   width: 200px !important;
+}
+.TodoModal_box ul {
+  display: flex;
+  gap: 15px;
+  margin-left: 20px;
+}
+.TodoModal_box ul li {
+  list-style: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.TodoModal_box ul .li_active {
+  box-shadow: 0 0 0 3px yellow;
+}
+.nbr{
+  position: relative;
+  bottom:5px;
+ width: 20px;
+ height: 20px;
+
+}
+.displayBtn{
+  display: none;
 }
