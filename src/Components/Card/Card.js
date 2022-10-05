@@ -1,17 +1,21 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import '../Card/Card.css'
-import TodoItem from './TodoItem'
-import Label from '../Labels/Labels'
+
+import Label from './Labels/Labels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faComment, faSquareCheck, faSquareMinus } from '@fortawesome/free-regular-svg-icons';
+import TodoModal from './TodoModal';
 
 const Card = (props) => {
+    const [openTodoModal,setOpenTodoModal]=useState(false)
     const { id, title, date, tasks, labels } = props.card;
     return (
-        
-        <div div className='todo_list_container'  >
+        <>
+         { <TodoModal card={props.card} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal}/>}
+        <div div className='todo_list_container' onClick={()=>setOpenTodoModal(true)} >
+           
             <FontAwesomeIcon icon={faSquareMinus} className="closeBtn" onClick={() => props.removeCard(id)} />
             {
                 props.card?.labels?.map((item, index) =>
@@ -38,12 +42,12 @@ const Card = (props) => {
                     <FontAwesomeIcon icon={faComment} /> <span>1</span>
                 </div>
             </div>
-            <TodoItem />
-        </div >
+           
+        </div>
+        </>
 
     )
-
-
+   
 
 }
 

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { faSquareMinus } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -56,10 +56,14 @@ const Board = (props) => {
           </Draggable>
  
         ))}
+        <div className='addacard_body'>
         <AddTitleBtn
+          text="+ Add Card"
           onSubmit={(value) => props.addCard(props.boards?.id, value)}
           placeholder="Enter Card Title"
         />
+        </div>
+       
       </div>
 
 

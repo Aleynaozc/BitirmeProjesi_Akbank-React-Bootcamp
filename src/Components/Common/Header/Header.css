@@ -1,6 +1,5 @@
-.header_rentacar {
+.header_app {
     position: sticky;
-   
     padding: 10px;
     top: 0 !important;
     background-image: linear-gradient(to right, #9aaeef, #ba9defd6, #8160bd);

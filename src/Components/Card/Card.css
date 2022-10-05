@@ -1,82 +1,177 @@
-.todo_list_container{
-    margin-top: 30px;
-    background-color: rgb(228, 226, 197);
-    border-radius: 10px;
-    padding:15px;
+.todo_list_container {
+  margin-top: 30px;
+  background-color: rgb(228, 226, 197);
+  border-radius: 10px;
+  padding: 10px;
 }
-.todo_list_main_title{
-    border-bottom: 1px solid black;
+
+.todo_list_main_title {
+  border-bottom: 1px solid black;
 }
-.icon_paperclip{
-    float: right;
-    cursor: pointer;
+
+.icon_paperclip {
+  float: right;
+  cursor: pointer;
 }
-.icon{
-    cursor: pointer;
+
+.icon {
+  cursor: pointer;
 }
-.modal-header{
-    background-color: #8160bd;
+
+.modal-header {
+  background-color: #8160bd;
 }
-.todo_modal_container{
-    margin-top: 40px;
-    width: 700px;
+
+.todo_modal_container {
+  margin-top: 20px;
+  width: 1500px;
 }
-.modal_title_icon{
-    width: 300px;
-    display: flex;
-    justify-content: space-around;
-    font-size: 23px;
-    color:white;
+
+.modal_title_icon {
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 23px;
+  color: white;
 
 }
-.title__container input {
-border:1px solid black;
-border-radius: 4px;
-padding:10px;
+
+.TodoModal_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
 }
-.title__container span {
-    background-color: rgb(255, 255, 255);
-     position: relative;
-     top:12px;
-     left:20px;
+
+.TodoModal_box_title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
-.btn-primary{
-    background-color: #8160bd!important;
+
+.TodoModal_box_title p {
+  font-weight: 600;
+  font-size: 20px;
 }
-.desc_inp{
-    width: 765px;
-    height: 100px;
-    margin-top: 30px;
+
+.btn-primary {
+  background-color: #8160bd !important;
 }
-.comment_container{
-    display: flex;
-    margin-top: 30px;
-    
+
+.desc_inp {
+  width: 765px;
+  height: 100px;
+  margin-top: 30px;
 }
-.comment_textarea{
-    width: 765px;
+
+.comment_container {
+  display: flex;
+  margin-top: 30px;
+
 }
-.card_footer{
-    display: flex;
+
+.comment_textarea {
+  width: 765px;
 }
-.date_of_todo{
-    background-color: #8160bd;
-    padding:5px;
-    margin-right: 10px;
- 
-    
- 
+
+.card_footer {
+  display: flex;
 }
-.compeleted_todo{
-    background-color: gray;
-    min-width: 50px;
+
+.date_of_todo {
+  background-color: #8160bd;
+  padding: 5px;
+  margin-right: 10px;
+
+
+
 }
-.date_of_todo,.compeleted_todo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 35px;
-    font-size:13px;
-    border-radius: 15px;
-    color: white;
+
+.compeleted_todo {
+  background-color: gray;
+  min-width: 50px;
+}
+
+.date_of_todo,
+.compeleted_todo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  font-size: 13px;
+  border-radius: 15px;
+  color: white;
+}
+
+.checkList_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkList_box_title {
+  display: flex;
+  gap: 10px;
+
+  align-items: center;
+}
+
+.checkList_box_title p {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.checkList_box_title svg {
+  height: 18px;
+  width: 18px;
+}
+
+.todoModal__progress-bar {
+  width: 100%;
+  border-radius: 30px;
+  height: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.todoModal__progress {
+  height: 100%;
+  border-radius: 30px;
+  background-color: skyblue;
+  width: 0;
+  transition: 200ms;
+}
+
+.todoModal_check_list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.todoModal_check_list_checkbox {
+  display: flex;
+  gap: 10px;
+}
+
+.todoModal_check_list_checkbox input,
+.todoModal_check_list_checkbox svg {
+  height: 16px;
+  width: 16px;
+  outline: none;
+  cursor: pointer;
+}
+
+.todoModal_check_list_checkbox p {
+  flex: 1;
+  line-height: 18px;
+}
+
+.todoModal_check_checkbox .completed {
+  text-decoration-line: line-through;
+}
+
+.modal-sm {
+  width: 200px !important;
 }

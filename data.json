@@ -1,25 +1,58 @@
 {
   "Board": [
     {
-      "id": 2,
+      "id": 1,
       "title": "Eğitim",
-      "cards": [
+      "ownerId": "1",
+      "UpdatedAt": "29-09-2022",
+      "CreatedAt": "31-10-2022",
+      "card": [
         {
-          "id": 2,
-          "maintitle": "Matematik",
-          "desc": "100 soru çözülecek.",
-          "date":"",
-          "checkList":[],
+          "id": 1,
+          "title": "100 soru çözülecek.",
+          "boardId": "Matematik",
+          "UpdatedAt": "29-09-2022",
+          "CreatedAt": "31-10-2022",
+          "list": [
+            {
+              "id": 1,
+              "title": "100 soru çözülecek.",
+              "cardId": "1",
+              "UpdatedAt": "29-09-2022",
+              "CreatedAt": "31-10-2022",
+              "checkList": [
+                {
+                  "id": 2,
+                  "title": "100 soru çözülecek.",
+                  "listId": "1",
+                  "UpdatedAt": "29-09-2022",
+                  "CreatedAt": "31-10-2022",
+                  "checkItem": [
+                    {
+                      "id": 2,
+                      "title": "100 soru çözülecek.",
+                      "checkListId": "2",
+                      "isChecked": false,
+                      "UpdatedAt": "29-09-2022",
+                      "CreatedAt": "31-10-2022"
+                    }
+                  ]
+                }
+              ]
+              
+            }
+          ],
           "labels": [
             {
-              "text": "design",
-              "color": "blue"
+              "id": "1",
+              "cardId": "2",
+              "labelId": "2"
             }
           ],
           "comment": [
             {
               "id": "2",
-              "text": "naber"
+              "cardId": "2"
             }
           ]
         }

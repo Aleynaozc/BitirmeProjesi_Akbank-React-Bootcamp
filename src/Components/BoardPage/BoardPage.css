@@ -14,9 +14,9 @@
     left: 100px;
     top: 20px;
     position: relative;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    row-gap: 50px;
+    display: flex;
+    gap:30px;
+    
    
 }
 .addList_btn_box:hover button {

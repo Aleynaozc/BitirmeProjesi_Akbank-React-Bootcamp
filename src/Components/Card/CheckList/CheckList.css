@@ -1,0 +1,26 @@
+.cl_title_modal .modal-content{
+    background-color: #8160bd!important;
+    color:white;
+ 
+}
+.cl_title_modal{
+
+    margin-top: 120px;
+}
+.modal-content .form-label{
+    background-color: rgb(178, 72, 216)!important;
+    border-radius: 2px;
+   text-align: center;
+   width: inherit;
+   padding: 6px;
+}
+.css-e4w4as-MuiFormLabel-root-MuiInputLabel-root{
+    color:white!important;
+}
+.css-o943dk-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{
+    color:white!important;
+}
+.btn-close{
+    width: 0px!important;
+    height: 0px!important;
+}

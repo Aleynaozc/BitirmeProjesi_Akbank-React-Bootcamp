@@ -8,7 +8,7 @@ const Header = () => {
   const[editTitle,setEditTitle]=useState('Board Title')
 
   return (
-    <div className='header_rentacar'>
+    <div className='header_app'>
           <Link to="/" className='link_style'>
           <button className='boards_btn'> 
           <FontAwesomeIcon icon={faChartBar}  className="chart_icon" />

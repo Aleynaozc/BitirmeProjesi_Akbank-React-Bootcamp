@@ -5,36 +5,39 @@ import '../AddTitleBtn/AddTitleBtn.css'
 const AddTitleBtn = (props) => {
     const [showAddTitleBtn, setShowAddTitleBtn] = useState(false)
     const [inputText, setInputText] = useState("");
-  
+
     const submission = (e) => {
-      e.preventDefault();
-      if (inputText && props.onSubmit) {
-        
-        props.onSubmit(inputText);
-        setInputText("")
-      }
-      
+        e.preventDefault();
+        if (inputText && props.onSubmit) {
+
+            props.onSubmit(inputText);
+            setInputText("")
+        }
+
     };
 
-  
+
     return (
-        <div className='addacard_body'>
+        <div className=''>
             {
                 showAddTitleBtn ? (
-                    <form onSubmit={submission}>
+                    <form onSubmit={submission} className={`editable_edit ${props.editClass ? props.editClass : ""}`}>
                         <input
                             type="text"
                             name='maintitle'
+                            placeholder={props.placeholder || props.text}
                             className='add-todo-title_inp'
                             value={inputText}
                             onChange={(event) => setInputText(event.target.value)}
                         />
-                        
+
                         {/* Add Board Title Button */}
                         <button
                             type='submit'
-                            className='add-todo-title_btn'>
-                            Add
+                            className='add-todo-title_btn'
+
+                        >
+                            {props.buttonText|| "Add"}
                         </button>
 
                         {/* Cancel Button */}
@@ -49,9 +52,10 @@ const AddTitleBtn = (props) => {
                     </form>
                 )
                     : (
-                        <button onClick={() => setShowAddTitleBtn(true)} className='addTodo_btn'>
-                            <FontAwesomeIcon icon={faPlus} className="plus_icon_card" />
-                            <span className='card-title'>Add a Card</span>
+                        <button onClick={() => setShowAddTitleBtn(true)} className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
+                            }`}>
+
+                            <span className='card-title'>  {props.text}</span>
                         </button>
                     )
 

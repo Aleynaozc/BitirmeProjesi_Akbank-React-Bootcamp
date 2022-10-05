@@ -1,8 +1,5 @@
-.addacard_body{
-    margin-top: 20px;
-    
-}
-.addacard_body .addTodo_btn{
+
+.addTodo_btn{
    border:none;
    background-color: transparent;
 }

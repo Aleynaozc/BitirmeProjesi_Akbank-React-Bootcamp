@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable} from 'react-beautiful-dnd'
 import '../BoardPage/BoardPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,6 @@ import Board from '../Board/Board';
 const BoardPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [boards, setBoards] = useState([])
-  const [targetCard, setTargetCard] = useState({
-    boardId: "",
-    cardId: "",
-  });
-
   //Creat Unique ID
   const uniqueIdGenerator = () => {
     return Math.floor(Math.random() * 100000 + 1);
@@ -44,6 +39,7 @@ const BoardPage = () => {
               {
                 id: uniqueIdGenerator(),
                 maintitle,
+                boardId:id,
                 desc: "",
                 date: "",
                 checkList: [],
@@ -76,14 +72,6 @@ const BoardPage = () => {
     localStorage.setItem("BoardsList", JSON.stringify(boards));
   }, [boards]);
 
-  const onDragEntered = (boardId, cardId) => {
-    if (targetCard.cardId === cardId) return;
-    setTargetCard({
-      boardId,
-      cardId,
-    });
-  }
-console.log(boards)
   const onDragEnd = result => {
     if (!result.destination) return
 
@@ -140,7 +128,6 @@ console.log(boards)
               droppableId={String(board.id)}>
               {(provided) => (
                 <div
-                  className=""
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
