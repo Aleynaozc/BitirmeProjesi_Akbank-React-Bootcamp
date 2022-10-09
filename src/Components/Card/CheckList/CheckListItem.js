@@ -1,11 +1,12 @@
 import React from 'react'
 import {faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-const CheckList = (props) => {
+const CheckListItem = (props) => {
+  
   return (
 <div  className="todoModal_check_list_checkbox">
            <div key={props.key} >
-              <input
+            <input
               type="checkbox"
               defaultChecked=""
             />
@@ -16,4 +17,4 @@ const CheckList = (props) => {
   )
 }
 
-export default CheckList
+export default CheckListItem

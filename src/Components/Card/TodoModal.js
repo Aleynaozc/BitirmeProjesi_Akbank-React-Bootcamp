@@ -11,6 +11,7 @@ import CheckListTitle from './CheckList/CheckListTitle'
 import Labels from './Labels/Labels'
 import Date from './Date/Date'
 import AddTitleBtn from '../AddTitleBtn/AddTitleBtn'
+import CheckListItem from './CheckList/CheckListItem'
 
 const TodoModal = (props) => {
 
@@ -27,7 +28,9 @@ const TodoModal = (props) => {
   };
 
 
+
   const addCheckList = (value) => {
+
     const checkLists = {
       id: uniqueIdGenerator(),
       text: value,
@@ -38,20 +41,32 @@ const TodoModal = (props) => {
       ...values,
       checkList: [...values.checkList, checkLists],
     });
+
   };
-  console.log(values.checkList.text)
+
+
   const addCheckListItem = (value) => {
-    const addCheckListItem = {
-      id: uniqueIdGenerator(),
-      isChecked: false,
-      text: value,
-      checkListId: "",
-    };
-    setValues({
-      ...values,
-      checkListItem: [...values.checkListItem, addCheckListItem],
-    });
+
+    let newValue = values.checkList.map((i) =>
+      i.id === values.checkList.id
+        ? {
+          ...i,
+          checkListItem: [
+            ...i.checkListItem,
+            {
+              id: uniqueIdGenerator(),
+              isChecked: false,
+              text: value,
+              checkListId: values.checkList.id,
+            }
+          ],
+        } : { ...i }
+    )
+    setValues(newValue)
+
+
   };
+  console.log(values)
 
   const colors = [
     "#a8193d",
@@ -68,7 +83,6 @@ const TodoModal = (props) => {
     const completed = values.tasks?.filter((item) => item.completed)?.length;
     return (completed / values.tasks?.length) * 100;
   };
-
 
   const handleClose = () => props.setOpenTodoModal(false);
 
@@ -95,7 +109,7 @@ const TodoModal = (props) => {
               <FontAwesomeIcon icon={faCalendar} className="" onClick={() => (setOpenCalendarModal(true))} />
               <FontAwesomeIcon icon={faTag} transform={{ rotate: 135 }} className="" onClick={() => (setOpenLabelModal(true))} />
               <FontAwesomeIcon icon={faSquareCheck} onClick={() => (setOpenCheckListModal(true))} />
-              <FontAwesomeIcon icon={faEllipsis} className="" />
+
             </div>
           </Modal.Title>
         </Modal.Header>
@@ -122,62 +136,82 @@ const TodoModal = (props) => {
               />
 
             </div>
+
             {/* DESCRIPTION */}
             <div className="TodoModal_box">
               <div className='TodoModal_box_title'>
                 <p>Description</p>
               </div>
               <AddTitleBtn
-                text={"desc"}
+                text={"Enter Description"}
                 default={values.desc}
                 placeholder="Enter Description"
                 buttonText="Save"
               />
             </div>
+
             {/* CHECK LIST START */}
-            {values.checkList?.map((item) => (
-              <div className='checkList_box'>
-                <div className='TodoModal_box_title'>
-                <FontAwesomeIcon icon={faSquareCheck} className="nbr" /> 
-                 <AddTitleBtn
-                    text={item.text}
+            <div className='checkList__container custom-scroll'>
+              {values.checkList?.map((checkList) => (
+                <div className='checkList_box'>
+                  <div className='TodoModal_box_title'>
+                    <FontAwesomeIcon icon={faSquareCheck} className="nbr" />
+                    <AddTitleBtn
+                      text={checkList.text}
+                      defaultValue={"Check List Title "}
+                      placeholder="Update Title"
+                      buttonText="Set Title"
+                      displayTextClass={""}
+
+                    />
+
+                  </div>
+                  <div className="todoModal__progress-bar">
+                    <div
+                      className="todoModal__progress"
+                      style={{
+                        width: `${calculatePercent()}%`,
+                        backgroundColor: calculatePercent() === 100 ? "limegreen" : "",
+                      }}
+                    />
+                  </div>
+
+                  <div className="todoModal_check_list ">
+                    {
+                      checkList.checkListItem.map((i, index) =>
+                        (
+                          <div className="todoModal_check_list_checkbox">
+                            <div key={index} >
+                              <input
+                                type="checkbox"
+                                defaultChecked=""
+                              />
+                              <p className="completed" >{i.text}</p>
+                              <FontAwesomeIcon icon={faTrash} className="" />
+                            </div>
+                          </div>
+                        )
+                        )
+                    }
+
+
+                  </div>
+                  <AddTitleBtn
+                    text={"Add a List"}
                     defaultValue={"Check List Title "}
-                    placeholder="Update Title"
-                    buttonText="Set Title"
-                    displayTextClass={""}
-                    
-                  />
-                  {/* <div key={item.id} className="cardinfo_box_task_checkbox">
-                <input
-                  type="checkbox"
-                  defaultChecked={item.completed}
-                  
-                />
-                <p className={item.completed ? "completed" : ""}>{item.text}</p>
-                
-              </div> */}
-                </div>
-                <div className="todoModal__progress-bar">
-                  <div
-                    className="todoModal__progress"
-                    style={{
-                      width: `${calculatePercent()}%`,
-                      backgroundColor: calculatePercent() === 100 ? "limegreen" : "",
-                    }}
+                    placeholder="Add Title"
+                    InputClass={"inputClass2"}
+                    editClass={"addListBtn"}
+                    displayButtonClass={"displayBtn"}
+                    displayClass={"list_design"}
+                    onSubmit={(value) => addCheckListItem(value)}
+                    displayFlex={"displyFlex"}
+                    btnPosClass={"btnPosClass"}
                   />
                 </div>
-
-                <div className="todoModal_check_list">
-                  {
-                    values.checkList?.map((item, index) =>
-                      console.log(item)
-                    )
-                  }
-
-                </div>
-              </div>
-            ))}
-
+              ))}
+            </div>
+            {/* CHECK LIST END */}
             <div className="TodoModal_box">
               <div className='TodoModal_box_title'>
                 <p>Label</p>
@@ -212,7 +246,7 @@ const TodoModal = (props) => {
               />
             </div>
 
-            {/* CHECK LIST END */}
+
             {/* COMMENTS */}
             <h5 style={{ marginTop: "30px" }}><FontAwesomeIcon icon={faMessage} style={{ marginRight: "10px" }} />Comment</h5>
             <div className='comment_container'>

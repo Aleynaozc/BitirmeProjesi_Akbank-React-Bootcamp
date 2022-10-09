@@ -14,14 +14,18 @@ const CheckListTitle = (props) => {
   return (
     props.openCheckListModal&&
     ( <div  className='checkList_body'>
-           <FontAwesomeIcon icon={faXmark} onClick={handleClose} />
+           <FontAwesomeIcon icon={faXmark} onClick={handleClose} className="closeTitle" />
             <AddTitleBtn
-                text={"Enter CheckList Title"}
+                text={"Click Here"}
                 defaultValue={"inputText"}
                 placeholder="Enter Title"
                 buttonText="Set Title"
                 onSubmit={props.onSubmit}
+                displayFlex={"displayFlex"}
                 displayButtonClass={"displayBtn"}
+                InputClass={"inputClass2"}
+                displayTextClass={"displayTextClass"}
+                displayClass={"displayClass2"}
               />
    
       

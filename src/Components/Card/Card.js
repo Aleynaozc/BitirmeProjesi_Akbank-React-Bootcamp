@@ -10,7 +10,7 @@ import TodoModal from './TodoModal';
 
 const Card = (props) => {
     const [openTodoModal, setOpenTodoModal] = useState(false)
-    const { id, title, date, tasks, labels } = props.card;
+    const { id, title, date, labels,checkList } = props.card;
 
     return (
         <>

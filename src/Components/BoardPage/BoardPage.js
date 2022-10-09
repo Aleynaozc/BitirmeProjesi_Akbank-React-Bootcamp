@@ -52,7 +52,29 @@ const BoardPage = () => {
       ))
   }
 
-  
+  const addCheckList = (id,value) => {
+    setBoards(
+      boards.map((i)=>
+      i.cards.map((item) =>
+      item.id ===id
+        ? {
+          ...item,
+          checkList: [
+            ...item.checkList,
+            {
+              id: uniqueIdGenerator(),
+              text: value,
+              cardId:id ,
+              checkListItem: [],
+            }
+          ]
+        }
+        : { ...item }
+    ))
+      )
+     
+   
+  };
   const removeBoard = (boardId) => {
 
     const newList = boards.filter((item) => item.id !== boardId);
@@ -134,6 +156,7 @@ const BoardPage = () => {
                   <Board
                     key={boards.id}
                     boards={board}
+                    
                     setBoards={setBoards}
                     addCard={handleAddCard}
                     removeBoard={removeBoard}
@@ -149,7 +172,7 @@ const BoardPage = () => {
 
           ))}
 
-          <BoardModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal} />
+          <BoardModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal}  />
 
         </div>
 
@@ -157,6 +180,7 @@ const BoardPage = () => {
 
     </>
   )
+
 }
 
 export default BoardPage

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../AddTitleBtn/AddTitleBtn.css'
 const AddTitleBtn = (props) => {
@@ -26,7 +26,7 @@ const AddTitleBtn = (props) => {
                             type="text"
                             name='maintitle'
                             placeholder={props.placeholder || props.text}
-                            className='add-todo-title_inp'
+                            className={`add-todo-title_inp ${props.InputClass ? props.InputClass : ""}`}
                             value={inputText}
                             onChange={(event) => setInputText(event.target.value)}
                         />
@@ -34,12 +34,11 @@ const AddTitleBtn = (props) => {
                         {/* Add Board Title Button */}
                         <button
                             type='submit'
-                            className='add-todo-title_btn'
-
-                        >
+                            className={`add-todo-title_btn ${props.btnPosClass ? props.btnPosClass : ""}`}>
                             {props.buttonText || "Add"}
+                            
                         </button>
-
+                        
                         {/* Cancel Button */}
                         <button
                             type="submit"
@@ -53,13 +52,14 @@ const AddTitleBtn = (props) => {
 
                     </form>
                 )
-                    : (
+                    : (<div className={props.displayFlex}>
                         <p onClick={() => setShowAddTitleBtn(true)} className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
                             }`}>
 
                             <span className={`card-title ${props.displayTextClass ? props.displayTextClass : ""
                                 }`}>{props.text}</span>
-                        </p>
+                        </p><FontAwesomeIcon icon={faTrash} className={`trashBtn ${props.trashBtn ? props.trashBtn : ""}` }/>
+                        </div>
                     )
 
             }

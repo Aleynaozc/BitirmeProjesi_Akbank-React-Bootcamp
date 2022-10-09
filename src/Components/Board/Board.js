@@ -45,11 +45,12 @@ const Board = (props) => {
                 className='todo_list_container custom-scroll'
               >
                 <Card
+                 
                   key={card.id}
                   boardId={props.boards.id}
                   card={card}
                   removeCard={props.removeCard}
-                  
+                 
 
                 />
               </div>
