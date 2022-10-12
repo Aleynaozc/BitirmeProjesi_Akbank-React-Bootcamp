@@ -3,8 +3,8 @@ import { DragDropContext, Droppable} from 'react-beautiful-dnd'
 import '../BoardPage/BoardPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import BoardModal from '../Board/BoardModal';
-import Board from '../Board/Board';
+import ListModal from '../List/ListModal';
+import List from '../List/List';
 
 
 const BoardPage = () => {
@@ -153,10 +153,9 @@ const BoardPage = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  <Board
+                  <List
                     key={boards.id}
                     boards={board}
-                    
                     setBoards={setBoards}
                     addCard={handleAddCard}
                     removeBoard={removeBoard}
@@ -172,7 +171,7 @@ const BoardPage = () => {
 
           ))}
 
-          <BoardModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal}  />
+          <ListModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal}  />
 
         </div>
 

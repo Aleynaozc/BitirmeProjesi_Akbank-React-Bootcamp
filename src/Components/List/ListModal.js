@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import '../Board/BoardModal.css'
+import '../List/ListModal.css'
 const ListModal = (props) => {
 
   const [inputText, setInputText] = useState("");

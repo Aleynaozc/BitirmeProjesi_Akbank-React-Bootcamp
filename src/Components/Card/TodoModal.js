@@ -23,6 +23,7 @@ const TodoModal = (props) => {
     ...props.card,
   });
 
+
   const uniqueIdGenerator = () => {
     return Math.floor(Math.random() * 100000 + 1);
   };
@@ -44,11 +45,10 @@ const TodoModal = (props) => {
 
   };
 
-
   const addCheckListItem = (value) => {
 
     let newValue = values.checkList.map((i) =>
-      i.id === values.checkList.id
+      i.id 
         ? {
           ...i,
           checkListItem: [
@@ -66,7 +66,7 @@ const TodoModal = (props) => {
 
 
   };
-  console.log(values)
+
 
   const colors = [
     "#a8193d",
