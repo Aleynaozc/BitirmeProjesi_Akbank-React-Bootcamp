@@ -30,7 +30,9 @@ const Labels = (props) => {
     ]
     return (
         <div  >
-            <Modal className='cl_title_modal ' size="sm" show={props.openLabelModal} onHide={handleClose} aria-labelledby="example-modal-sizes-title-sm">
+            <Modal className='cl_title_modal ' size="sm" 
+            show={props.openLabelModal} onHide={handleClose} 
+            aria-labelledby="example-modal-sizes-title-sm">
                 <ModalHeader closeButton></ModalHeader>
                 <Modal.Body >
                     <Form>

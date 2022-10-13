@@ -35,9 +35,86 @@
 }
 .checkList_body{
     background-color: #8160bd;
-    padding:20px;
+    padding:30px;
     border-radius: 20px;
+}
+.list_form input{
+    margin-top:30px;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+.cLtitle_btn{
+    background-color: rgb(173, 106, 221);
+    border-radius: 10px;
+    border: none;
+    padding:10px;
+    color:white;
 }
 .closeTitle{
     float: right;
+    font-size: 20px;
+    color:white;
 }
+.listItem_form{
+   
+    width: 413px;
+    padding: 10px;
+  
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+.listItem_form input{
+    width: 300px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #e6e2eb;
+}
+.cLitem_btn{
+    border-radius: 10px;
+    padding:10px;
+    background-color:  rgb(173, 106, 221);
+    border:none;
+    color:white;    
+ 
+}
+.cLitem_form_body{
+    display: flex;
+    gap: 10px;
+   
+}
+
+.cLtitle_btn_cont{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.cardinfo_box_task_checkbox{
+    display: flex;
+    padding:10px;
+    gap:10px;
+    margin-bottom: 20px;
+}
+.cardinfo_box_task_checkbox input{
+    width: 19px;
+    
+}
+.cardinfo_box_task_checkbox span{
+    flex: 1;
+    line-height: 18px;
+    font-size: 20px;
+    
+
+}
+.clistItem_icons{
+    font-size: 20px;
+    color: rgb(173, 106, 221);
+    cursor:pointer;
+}
+

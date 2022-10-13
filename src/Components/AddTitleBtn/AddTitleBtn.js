@@ -9,16 +9,16 @@ const AddTitleBtn = (props) => {
     const submission = (e) => {
         e.preventDefault();
         if (inputText && props.onSubmit) {
-
             props.onSubmit(inputText);
             setInputText("")
+            setShowAddTitleBtn(false)
         }
 
     };
 
 
     return (
-        <div className=''>
+        <div className='' >
             {
                 showAddTitleBtn ? (
                     <form onSubmit={submission} className={`editable_edit ${props.editClass ? props.editClass : ""}`}>
@@ -33,12 +33,13 @@ const AddTitleBtn = (props) => {
 
                         {/* Add Board Title Button */}
                         <button
+
                             type='submit'
                             className={`add-todo-title_btn ${props.btnPosClass ? props.btnPosClass : ""}`}>
                             {props.buttonText || "Add"}
-                            
+
                         </button>
-                        
+
                         {/* Cancel Button */}
                         <button
                             type="submit"
@@ -52,13 +53,22 @@ const AddTitleBtn = (props) => {
 
                     </form>
                 )
-                    : (<div className={props.displayFlex}>
-                        <p onClick={() => setShowAddTitleBtn(true)} className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
-                            }`}>
+                    : (
+                        <div className={props.displayFlex}>
 
-                            <span className={`card-title ${props.displayTextClass ? props.displayTextClass : ""
-                                }`}>{props.text}</span>
-                        </p><FontAwesomeIcon icon={faTrash} className={`trashBtn ${props.trashBtn ? props.trashBtn : ""}` }/>
+                            <p onClick={() => setShowAddTitleBtn(true)}
+                                className={`addTodo_btn ${props.displayClass ? props.displayClass : ""
+                                    }`}
+                            >
+                                <span
+                                    className={`card-title ${props.displayTextClass ? props.displayTextClass : ""
+                                        }`}>
+                                    {props.text}
+                                </span>
+                            </p><FontAwesomeIcon
+                                icon={faTrash}
+                                className={`trashBtn ${props.trashBtn ? props.trashBtn : ""}`}
+                            />
                         </div>
                     )
 

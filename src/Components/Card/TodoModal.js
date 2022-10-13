@@ -12,9 +12,10 @@ import Labels from './Labels/Labels'
 import Date from './Date/Date'
 import AddTitleBtn from '../AddTitleBtn/AddTitleBtn'
 import CheckListItem from './CheckList/CheckListItem'
-
+import { v4 as uuidv4 } from 'uuid';
 const TodoModal = (props) => {
 
+  const { id, maintitle, date, desc } = props.card;
   const [selectedColor, setSelectedColor] = useState();
   const [openCheckListModal, setOpenCheckListModal] = useState(false)
   const [openLabelModal, setOpenLabelModal] = useState(false)
@@ -24,49 +25,45 @@ const TodoModal = (props) => {
   });
 
 
-  const uniqueIdGenerator = () => {
-    return Math.floor(Math.random() * 100000 + 1);
-  };
-
-
 
   const addCheckList = (value) => {
+    props.boardsList.map((i) => {
+      i.cards.map((t) => {
+        if (t.id == id) {
+          const checkLists = {
+            id: uuidv4(),
+            text: value,
+            cardId: id,
+            checkListItem: []
+          };
+          t.checkList = [...t.checkList, checkLists]
+        }
+      }
+      )
 
-    const checkLists = {
-      id: uniqueIdGenerator(),
-      text: value,
-      cardId: values.id,
-      checkListItem: [],
-    };
-    setValues({
-      ...values,
-      checkList: [...values.checkList, checkLists],
-    });
-
-  };
-
-  const addCheckListItem = (value) => {
-
-    let newValue = values.checkList.map((i) =>
-      i.id 
-        ? {
-          ...i,
-          checkListItem: [
-            ...i.checkListItem,
-            {
-              id: uniqueIdGenerator(),
-              isChecked: false,
-              text: value,
-              checkListId: values.checkList.id,
-            }
-          ],
-        } : { ...i }
-    )
-    setValues(newValue)
-
+    })
 
   };
 
+  props.boardsList.map((t) => t.cards.map((i) =>
+  console.log(i.labels)))
+
+  const addCheckListItem = (checkLId, value) => {
+    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
+      if (k.cardId === i.id) {
+        const checkListItems = {
+          id: uuidv4(),
+          text: value,
+          isChecked: false,
+          checkListId: checkLId,
+        };
+        k.checkListItem = [...k.checkListItem, checkListItems]
+      }
+    })))
+
+  }
+
+  const checkListsItems = props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => k.checkListItem)))
 
   const colors = [
     "#a8193d",
@@ -79,9 +76,9 @@ const TodoModal = (props) => {
   ];
   //PROGRESS BAR
   const calculatePercent = () => {
-    if (!values.tasks?.length) return 0;
-    const completed = values.tasks?.filter((item) => item.completed)?.length;
-    return (completed / values.tasks?.length) * 100;
+    if (!checkListsItems?.length) return 0;
+    const completed = checkListsItems?.filter((item) => item.isChecked)?.length;
+    return (completed / checkListsItems?.length) * 100;
   };
 
   const handleClose = () => props.setOpenTodoModal(false);
@@ -89,12 +86,12 @@ const TodoModal = (props) => {
   return (
     <>
       <Date
-        date={values.date}
+        date={date}
         openCalendarModal={openCalendarModal}
         setOpenCalendarModal={setOpenCalendarModal} />
+
       <Modal
         show={props.openTodoModal}
-
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         className='todo_modal_container'
@@ -121,7 +118,6 @@ const TodoModal = (props) => {
               setOpenCheckListModal={setOpenCheckListModal}
             />
           </div>
-
           {/* TITLE */}
           <div className='title__container'>
             <div className="TodoModal_box">
@@ -129,12 +125,11 @@ const TodoModal = (props) => {
                 <p>Title *</p>
               </div>
               <AddTitleBtn
-                text={values.maintitle}
+                text={maintitle}
                 defaultValue={"maintitle"}
                 placeholder="Enter Title"
                 buttonText="Set Title"
               />
-
             </div>
 
             {/* DESCRIPTION */}
@@ -144,7 +139,7 @@ const TodoModal = (props) => {
               </div>
               <AddTitleBtn
                 text={"Enter Description"}
-                default={values.desc}
+                default={desc}
                 placeholder="Enter Description"
                 buttonText="Save"
               />
@@ -152,64 +147,33 @@ const TodoModal = (props) => {
 
             {/* CHECK LIST START */}
             <div className='checkList__container custom-scroll'>
-              {values.checkList?.map((checkList) => (
-                <div className='checkList_box'>
-                  <div className='TodoModal_box_title'>
-                    <FontAwesomeIcon icon={faSquareCheck} className="nbr" />
-                    <AddTitleBtn
-                      text={checkList.text}
-                      defaultValue={"Check List Title "}
-                      placeholder="Update Title"
-                      buttonText="Set Title"
-                      displayTextClass={""}
+              {props.boardsList.map((t) => t.cards.map((card) =>
+                card.checkList.map((checkList, index) =>
+                  <div className='checkList_box'>
+                    <div key={index} className='TodoModal_box_title'>
+                      <FontAwesomeIcon icon={faSquareCheck} className="nbr" />
+                      <p>{checkList.text}</p>
+                    </div>
+                    <div className="todoModal__progress-bar">
+                      <div
+                        className="todoModal__progress"
 
-                    />
-
+                        style={{
+                          width: `${calculatePercent()}%`,
+                          backgroundColor: calculatePercent() === 100 ? "limegreen" : "",
+                        }}
+                      />
+                    </div>
+                    <div className="todoModal_check_list ">
+                      <CheckListItem
+                        checkList={checkList}
+                        checkListId={checkList.id}
+                        onSubmit={(value) => addCheckListItem(checkList.id, value)}
+                      />
+                    </div>
                   </div>
-                  <div className="todoModal__progress-bar">
-                    <div
-                      className="todoModal__progress"
-                      style={{
-                        width: `${calculatePercent()}%`,
-                        backgroundColor: calculatePercent() === 100 ? "limegreen" : "",
-                      }}
-                    />
-                  </div>
-
-                  <div className="todoModal_check_list ">
-                    {
-                      checkList.checkListItem.map((i, index) =>
-                        (
-                          <div className="todoModal_check_list_checkbox">
-                            <div key={index} >
-                              <input
-                                type="checkbox"
-                                defaultChecked=""
-                              />
-                              <p className="completed" >{i.text}</p>
-                              <FontAwesomeIcon icon={faTrash} className="" />
-                            </div>
-                          </div>
-                        )
-                        )
-                    }
-
-
-                  </div>
-                  <AddTitleBtn
-                    text={"Add a List"}
-                    defaultValue={"Check List Title "}
-                    placeholder="Add Title"
-                    InputClass={"inputClass2"}
-                    editClass={"addListBtn"}
-                    displayButtonClass={"displayBtn"}
-                    displayClass={"list_design"}
-                    onSubmit={(value) => addCheckListItem(value)}
-                    displayFlex={"displyFlex"}
-                    btnPosClass={"btnPosClass"}
-                  />
-                </div>
-              ))}
+                )))
+              }
             </div>
             {/* CHECK LIST END */}
             <div className="TodoModal_box">
@@ -217,14 +181,18 @@ const TodoModal = (props) => {
                 <p>Label</p>
               </div>
               {
-                values.labels?.map((item, index) =>
-                  <Labels
-
-                    key={index + item.text}
-                    color={index + item.color}
-                    text={item.text}
-                    style={{ backgroundColor: item.color, color: "#fff" }}
-                  />
+                props.boardsList.map((t) => t.cards.map((i) =>
+                  i.labels?.map((item, index) =>
+                    <Labels
+                      key={index + item.text}
+                      openLabelModal={openLabelModal} 
+                      setOpenLabelModal={setOpenLabelModal}
+                      color={index + item.color}
+                      text={item.text}
+                      style={{ backgroundColor: item.color, color: "#fff" }}
+                    />
+                  )
+                )
                 )
               }
               <ul>
@@ -240,7 +208,6 @@ const TodoModal = (props) => {
               </ul>
               <AddTitleBtn
                 text="label"
-
                 placeholder="Enter Label"
                 buttonText="Save"
               />
@@ -266,7 +233,6 @@ const TodoModal = (props) => {
         </Modal.Footer>
       </Modal>
 
-      <Labels openLabelModal={openLabelModal} setOpenLabelModal={setOpenLabelModal} />
     </>
   )
 }

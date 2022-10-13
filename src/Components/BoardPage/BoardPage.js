@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { DragDropContext, Droppable} from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import '../BoardPage/BoardPage.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListModal from '../List/ListModal';
 import List from '../List/List';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const BoardPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [boards, setBoards] = useState([])
-  //Creat Unique ID
   const uniqueIdGenerator = () => {
     return Math.floor(Math.random() * 100000 + 1);
   };
-  
+
   // ADD BOARD
   const handleAddBoard = (title) => {
     setBoards([
@@ -39,7 +38,7 @@ const BoardPage = () => {
               {
                 id: uniqueIdGenerator(),
                 maintitle,
-                boardId:id,
+                boardId: id,
                 desc: "",
                 date: "",
                 checkList: [],
@@ -52,29 +51,22 @@ const BoardPage = () => {
       ))
   }
 
-  const addCheckList = (id,value) => {
-    setBoards(
-      boards.map((i)=>
-      i.cards.map((item) =>
-      item.id ===id
-        ? {
-          ...item,
-          checkList: [
-            ...item.checkList,
-            {
-              id: uniqueIdGenerator(),
-              text: value,
-              cardId:id ,
-              checkListItem: [],
-            }
-          ]
-        }
-        : { ...item }
-    ))
-      )
-     
-   
-  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const removeBoard = (boardId) => {
 
     const newList = boards.filter((item) => item.id !== boardId);
@@ -95,30 +87,42 @@ const BoardPage = () => {
   }, [boards]);
 
   const onDragEnd = result => {
+
     if (!result.destination) return
 
     const { source, destination } = result
 
     if (source.droppableId !== destination.droppableId) {
-        const sourceColIndex = boards.findIndex(e => e.id === Number(source.droppableId))
-        const destinationColIndex = boards.findIndex(e =>e.id === Number(destination.droppableId))
+      const sourceColIndex = boards.findIndex(e => e.id === Number(source.droppableId))
+      const destinationColIndex = boards.findIndex(e => e.id === Number(destination.droppableId))
 
-        const sourceCol = boards[sourceColIndex]
-        const destinationCol = boards[destinationColIndex]
-    
-        const sourceTask = [...sourceCol.cards]
-        const destinationTask = [...destinationCol.cards]
+      const sourceCol = boards[sourceColIndex]
+      const destinationCol = boards[destinationColIndex]
 
-        const [removed] = sourceTask.splice(source.index, 1)
-        destinationTask.splice(destination.index, 0, removed)
+      const sourceTask = [...sourceCol.cards]
+      const destinationTask = [...destinationCol.cards]
 
-        boards[sourceColIndex].cards = sourceTask
-        boards[destinationColIndex].cards = destinationTask
+      const [removed] = sourceTask.splice(source.index, 1)
+      destinationTask.splice(destination.index, 0, removed)
 
-        setBoards(boards)
+      boards[sourceColIndex].cards = sourceTask
+      boards[destinationColIndex].cards = destinationTask
+
+      setBoards(boards)
     }
-}
+  }
 
+
+
+  const updateCard = (cardId, boardId ,card ) => {
+    const boardIndex = boards.findIndex((e) => e.id === boardId)
+    if (boardIndex < 0) return;
+    const cardIndex = boards[boardIndex].cards.findIndex((e) => e.id === cardId)
+    if (cardIndex < 0) return;
+    const tempboards= [...boards]
+    tempboards[boardId].cards[cardId]=card;
+    setBoards(tempboards)
+  }
 
 
   return (
@@ -138,7 +142,7 @@ const BoardPage = () => {
 
       </div>
       <DragDropContext onDragEnd={onDragEnd}
-       
+
       >
 
 
@@ -154,24 +158,26 @@ const BoardPage = () => {
                   ref={provided.innerRef}
                 >
                   <List
+
                     key={boards.id}
                     boards={board}
+                    boardsList={boards}
                     setBoards={setBoards}
                     addCard={handleAddCard}
                     removeBoard={removeBoard}
                     removeCard={removeCard}
                   />
-                      {provided.placeholder}
+                  {provided.placeholder}
                 </div>
-              
+
               )
               }
-             
+
             </Droppable>
 
           ))}
 
-          <ListModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal}  />
+          <ListModal onSubmit={handleAddBoard} openModal={openModal} setOpenModal={setOpenModal} />
 
         </div>
 
