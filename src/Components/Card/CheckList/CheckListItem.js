@@ -11,30 +11,27 @@ const CheckListItem = (props) => {
     if (inputText && props.onSubmit) {
       props.onSubmit(inputText);
       setInputText("")
-
     }
-
   };
-
-
-
+  
   return (
     <>
       <div className="todoModal_check_list_items_container">
         {props.checkList.checkListItem.map((cLitem) =>
-        (<div className="cardinfo_box_task_checkbox">
-          <input
-            type="checkbox"
-            defaultValue={cLitem.isChecked}
-          /><span className={cLitem.isChecked ? "completed" : ""}>{cLitem.text}</span>
-          <FontAwesomeIcon icon={faPen} className="clistItem_icons" /> <FontAwesomeIcon icon={faTrash} className="clistItem_icons" />
-
-        </div>
-        )
-
-
-
-        )
+        (
+          <div className="todomodal_checklist_checkbox" key={cLitem.id}>
+            <input
+              type="checkbox"
+              defaultChecked={cLitem.isChecked}
+            /><span className={cLitem.isChecked ? "completed" : ""}>{cLitem.text}</span>
+            <FontAwesomeIcon icon={faPen} className="clistItem_icons" /> 
+            <FontAwesomeIcon 
+            icon={faTrash} 
+            className="clistItem_icons" 
+            onClick={()=>props.deleteCheckListItem(cLitem.id)}
+            />
+          </div>
+        ))
         }
         <div className='listItem_form'>
           <form onSubmit={submission}>
@@ -44,7 +41,6 @@ const CheckListItem = (props) => {
                 onChange={(event) => setInputText(event.target.value)}
                 placeholder='Add a CheckList Item'
               />
-
               <button type='submit' className='cLitem_btn'>Add</button>
 
             </div>

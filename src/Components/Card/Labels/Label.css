@@ -1,0 +1,40 @@
+.label_modal .modal-content{
+    background-color: #8160bd!important;
+    color:white;
+    right: 200px;
+    position: relative;
+}
+.label_modal{
+
+    margin-top: 190px;
+   
+}
+.modal-content .form-label{
+    background-color: rgb(178, 72, 216)!important;
+    border-radius: 2px;
+   text-align: center;
+   width: inherit;
+   padding: 6px;
+}
+.css-e4w4as-MuiFormLabel-root-MuiInputLabel-root{
+    color:white!important;
+}
+.css-o943dk-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{
+    color:white!important;
+}
+.label_body{
+    display: flex;
+    flex-direction: column;
+}
+.labels_item{
+    display: flex;
+}
+.labels_item input{
+    margin-top:7px;
+    width: 15px;
+    height: 15px;
+    margin-right: 20px;
+}
+.label_btn{
+    background-color: rgb(30, 62, 91)!important;
+}

@@ -1,11 +1,13 @@
 .cl_title_modal .modal-content{
     background-color: #8160bd!important;
     color:white;
- 
+    right: 290px;
+    position: relative;
 }
 .cl_title_modal{
 
-    margin-top: 120px;
+    margin-top: 190px;
+   
 }
 .modal-content .form-label{
     background-color: rgb(178, 72, 216)!important;
@@ -50,6 +52,7 @@
     border: none;
     padding:10px;
     color:white;
+    border: none;
 }
 .closeTitle{
     float: right;
@@ -95,17 +98,17 @@
     
 }
 
-.cardinfo_box_task_checkbox{
+.todomodal_checklist_checkbox{
     display: flex;
     padding:10px;
     gap:10px;
     margin-bottom: 20px;
 }
-.cardinfo_box_task_checkbox input{
+.todomodal_checklist_checkbox input{
     width: 19px;
     
 }
-.cardinfo_box_task_checkbox span{
+.todomodal_checklist_checkbox span{
     flex: 1;
     line-height: 18px;
     font-size: 20px;
@@ -117,4 +120,7 @@
     color: rgb(173, 106, 221);
     cursor:pointer;
 }
+.todomodal_checklist_checkbox .completed {
+    background-color: #8160bd;
+  }
 

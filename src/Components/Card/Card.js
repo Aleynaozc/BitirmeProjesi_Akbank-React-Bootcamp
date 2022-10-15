@@ -22,6 +22,7 @@ const Card = (props) => {
                         props.card?.labels?.map((item, index) =>
                             <hr className='hr_style' key={index} style={{ background: item.color , color: "#fff"}} />
                         )
+
                     }
                 </div>
                 <FontAwesomeIcon icon={faSquareMinus} className="closeBtn" onClick={() => props.removeCard(id)} />

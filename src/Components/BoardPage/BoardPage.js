@@ -13,7 +13,7 @@ const BoardPage = () => {
   const uniqueIdGenerator = () => {
     return Math.floor(Math.random() * 100000 + 1);
   };
-
+ 
   // ADD BOARD
   const handleAddBoard = (title) => {
     setBoards([
@@ -51,27 +51,9 @@ const BoardPage = () => {
       ))
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const removeBoard = (boardId) => {
-
     const newList = boards.filter((item) => item.id !== boardId);
     setBoards(newList);
-
   }
 
   const removeCard = (cardId) => {
@@ -81,6 +63,10 @@ const BoardPage = () => {
     })
     setBoards(newCardList);
   }
+
+
+
+  
 
   useEffect(() => {
     localStorage.setItem("BoardsList", JSON.stringify(boards));
@@ -114,15 +100,7 @@ const BoardPage = () => {
 
 
 
-  const updateCard = (cardId, boardId ,card ) => {
-    const boardIndex = boards.findIndex((e) => e.id === boardId)
-    if (boardIndex < 0) return;
-    const cardIndex = boards[boardIndex].cards.findIndex((e) => e.id === cardId)
-    if (cardIndex < 0) return;
-    const tempboards= [...boards]
-    tempboards[boardId].cards[cardId]=card;
-    setBoards(tempboards)
-  }
+
 
 
   return (
@@ -158,7 +136,6 @@ const BoardPage = () => {
                   ref={provided.innerRef}
                 >
                   <List
-
                     key={boards.id}
                     boards={board}
                     boardsList={boards}

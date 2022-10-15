@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, ModalHeader } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import "../Date/Date.css"
 const Date = (props) => {
     const handleClose=()=>{
         props.setOpenCalendarModal(false)

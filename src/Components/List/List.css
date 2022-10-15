@@ -12,16 +12,7 @@
     border: 1px solid gray;
   }
   
-  .board {
-    width: 300px;
-    background-color: rgb(255, 221, 0);
-    padding: 20px;
-    margin-right: 10px;
-    margin-left: 4px;
-    border-radius: 10px;
-    
-  
-  }
+
   .addacard_body{
     margin-top: 20px;
     

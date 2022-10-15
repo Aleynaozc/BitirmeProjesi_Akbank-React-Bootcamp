@@ -1,58 +1,77 @@
 
+import axios from 'axios';
+import { Form, Formik } from 'formik';
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { SignUpModel } from '../../services/Utils/Forms/Register/SignUpModel';
+import { SignUpValidationScheme } from '../../services/Utils/Forms/Register/validationScheme';
 import '../LoginRegister/LoginRegister.css'
- 
+
 const Register = () => {
     const navigate = useNavigate();
+    
     return (
-        <div class="container">
+        <div className="container">
             <div className='login__container'>
-                <div class="brand-title">Register</div>
-                <div class="inputs">
-                                <label>USER NAME</label>
-                                <input type="email" className='_inputs' placeholder="username"  />
-                                <label>EMAIL</label>
-                                <input type="email" className='_inputs' placeholder="example@test.com"  />
-                             
-                                <label>PASSWORD</label>
-                                <input type="password"  className='_inputs' placeholder="Min 6 charaters long"  />
-                              
-                                <label>CONFIRM PASSWORD</label>
-                                <input type="password"  className='_inputs' placeholder="Confirm Password" />
-              
-                                  
-                                <button type="submit" className="login_register_btn"onClick={() => navigate('/login')}>LOGIN</button>
-                            </div>
-                {/* <Formik
-                    // initialValues={SignInModel}
-                    // validationSchema={SignInValidationScheme}
-                    // onSubmit={(values, { resetForm }) => {
-                    //     _login(values);
-                    //     resetForm();
-                    // }}
+                <div className="login-register-title">Register</div>
+                <Formik
+                    initialValues={SignUpModel}
+                    validationSchema={SignUpValidationScheme}
+                    onSubmit={(values, { resetForm }) => {
+
+                        axios.post("http://localhost:80/auth/register",
+                            {
+                                username: values.username,
+                                password: values.password,
+                                passwordConfirm: ""
+                            }
+
+                        ).then((response) => console.log(response.data))
+
+                        resetForm();
+                    }
+
+                    }
                 >
                     {({
-                        errors, touched, handleChange }) => (
-                        <Form >
+                        errors, touched, handleChange,values,handleSubmit }) => (
+                        <form onSubmit={handleSubmit} >
 
-                            <div class="inputs">
+                            <div className="inputs">
                                 <label>USER NAME</label>
-                                <input type="email" className='_inputs' placeholder="username" onChange={handleChange} />
-                                <label>EMAIL</label>
-                                <input type="email" className='_inputs' placeholder="example@test.com"  onChange={handleChange}/>
-                                {errors.email && touched.email ? <small >{errors.email}</small> : null}
+                                <input type="text"
+                                    className='_inputs'
+                                    placeholder="User Name"
+                                    name='username'
+                                    onChange={handleChange}
+                                    value={values.username}
+                                />
                                 <label>PASSWORD</label>
-                                <input type="password"  className='_inputs' placeholder="Min 6 charaters long" onChange={handleChange} />
+                                <input
+                                    type="password"
+                                    className='_inputs'
+                                    name="password"
+                                    placeholder="Password"
+                                    onChange={handleChange}
+                                    value={values.password}
+                                />
                                 {errors.password && touched.password ? <small>{errors.password}</small> : null}
                                 <label>CONFIRM PASSWORD</label>
-                                <input type="password"  className='_inputs' placeholder="Confirm Password" onChange={handleChange}/>
+                                <input
+                                    type="password"
+                                    name="passwordConfirm"
+                                    className='_inputs'
+                                    placeholder="Confirm Password"
+                                    onChange={handleChange}
+                                    value={values.passwordConfirm}
+                                />
                                 {errors.password && touched.password ? <small>{errors.password}</small> : null}
-                                  
-                                <button type="submit" className="login_register_btn"onClick={() => navigate('/login')}>LOGIN</button>
+
+                                <button type="submit" className="login_register_btn" onClick={() => navigate('/login')}>Register</button>
+                            
                             </div>
-                        </Form>
-                    )}</Formik> */}
+                        </form>
+                    )}</Formik>
 
             </div>
         </div>

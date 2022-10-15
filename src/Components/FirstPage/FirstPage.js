@@ -12,7 +12,7 @@ const FirstPage = () => {
       <div className="addBorder-card">
         <div className="addBorder-card-body">
           <div className="addBorder-card_icon">
-            <Link to="/boardpage" className="link_color" >
+            <Link to="/board" className="link_color" >
               <FontAwesomeIcon icon={faPlus} />
             </Link>
           </div>

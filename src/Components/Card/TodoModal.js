@@ -1,28 +1,46 @@
-import { faCalendar, faEllipsis, faTag, faTrash, faUser } from '@fortawesome/free-solid-svg-icons'
+import React, {  useEffect, useState } from 'react'
+import { faCalendar,faTag, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faMessage, faSquareCheck } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
-import '../Card/Card.css'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-
 import CheckListTitle from './CheckList/CheckListTitle'
-
 import Labels from './Labels/Labels'
 import Date from './Date/Date'
 import AddTitleBtn from '../AddTitleBtn/AddTitleBtn'
 import CheckListItem from './CheckList/CheckListItem'
 import { v4 as uuidv4 } from 'uuid';
+
+import '../Card/Card.css'
+import axios from 'axios';
 const TodoModal = (props) => {
+
 
   const { id, maintitle, date, desc } = props.card;
   const [selectedColor, setSelectedColor] = useState();
   const [openCheckListModal, setOpenCheckListModal] = useState(false)
   const [openLabelModal, setOpenLabelModal] = useState(false)
   const [openCalendarModal, setOpenCalendarModal] = useState(false)
-  const [values, setValues] = useState({
-    ...props.card,
-  });
+  const [label,setLabel]=useState([])
+  async function getAllData() {
+   try{
+    const response= await axios.get("http://localhost:80/label");
+    const data=response.data;
+    console.log(data)
+   }catch (error){
+    console.log(error.response)
+   }
+   
+  }
+   useEffect(()=>{
+    getAllData()
+   },[])
+
+
+
+
+
+
 
 
 
@@ -45,8 +63,6 @@ const TodoModal = (props) => {
 
   };
 
-  props.boardsList.map((t) => t.cards.map((i) =>
-  console.log(i.labels)))
 
   const addCheckListItem = (checkLId, value) => {
     props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
@@ -63,7 +79,33 @@ const TodoModal = (props) => {
 
   }
 
-  const checkListsItems = props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => k.checkListItem)))
+  const deleteCheckListItem = (id) => {
+    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
+      if (k.cardId === i.id) {
+        const newCheckListItem = k.checkListItem.filter((checkListItem) =>
+          checkListItem.id !== id)
+
+        k.checkListItem = newCheckListItem
+      }
+    })))
+
+  }
+
+  const addLabel = (color,label) => {
+
+    props.boardsList.map((t) => t.cards.map((i) => {
+      const labelsItem = {
+        id: uuidv4(),
+        color: color,
+        text: label
+      };
+      i.labels = [...i.labels, labelsItem]
+    }))
+  };
+
+
+
+
 
   const colors = [
     "#a8193d",
@@ -74,12 +116,33 @@ const TodoModal = (props) => {
     "#cf61a1",
     "#240959",
   ];
+
+
   //PROGRESS BAR
+
   const calculatePercent = () => {
-    if (!checkListsItems?.length) return 0;
-    const completed = checkListsItems?.filter((item) => item.isChecked)?.length;
-    return (completed / checkListsItems?.length) * 100;
+    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
+
+      if (!k.checkListsItem?.length) return 0;
+      const isChecked = k.checkListsItem?.filter((item) => item.isChecked)?.length;
+      return (isChecked / k.checkListsItem?.length) * 100;
+    })))
+
   };
+  
+
+
+//   const [post, setPost] = useState(null);
+
+// //  useEffect(() => {
+// //     axios.get('http://localhost:80/label').then((response) => {
+// //       setPost(response.data);
+// //     });
+// //   }, []);
+// // console.log(post)
+
+
+
 
   const handleClose = () => props.setOpenTodoModal(false);
 
@@ -89,6 +152,10 @@ const TodoModal = (props) => {
         date={date}
         openCalendarModal={openCalendarModal}
         setOpenCalendarModal={setOpenCalendarModal} />
+      <Labels
+        openLabelModal={openLabelModal}
+        setOpenLabelModal={setOpenLabelModal}
+      />
 
       <Modal
         show={props.openTodoModal}
@@ -103,8 +170,8 @@ const TodoModal = (props) => {
         <Modal.Header closeButton>
           <Modal.Title className='modal_header_title'>
             <div className='modal_title_icon'>
-              <FontAwesomeIcon icon={faCalendar} className="" onClick={() => (setOpenCalendarModal(true))} />
-              <FontAwesomeIcon icon={faTag} transform={{ rotate: 135 }} className="" onClick={() => (setOpenLabelModal(true))} />
+              <FontAwesomeIcon icon={faCalendar} onClick={() => (setOpenCalendarModal(true))} />
+              <FontAwesomeIcon icon={faTag} transform={{ rotate: 135 }} onClick={getAllData} />
               <FontAwesomeIcon icon={faSquareCheck} onClick={() => (setOpenCheckListModal(true))} />
 
             </div>
@@ -125,6 +192,7 @@ const TodoModal = (props) => {
                 <p>Title *</p>
               </div>
               <AddTitleBtn
+              InputClass={"input2"}
                 text={maintitle}
                 defaultValue={"maintitle"}
                 placeholder="Enter Title"
@@ -138,6 +206,7 @@ const TodoModal = (props) => {
                 <p>Description</p>
               </div>
               <AddTitleBtn
+              InputClass={"input2"}
                 text={"Enter Description"}
                 default={desc}
                 placeholder="Enter Description"
@@ -160,12 +229,13 @@ const TodoModal = (props) => {
 
                         style={{
                           width: `${calculatePercent()}%`,
-                          backgroundColor: calculatePercent() === 100 ? "limegreen" : "",
+                          backgroundColor: calculatePercent() === 100 ? "blue" : "",
                         }}
                       />
                     </div>
                     <div className="todoModal_check_list ">
                       <CheckListItem
+                        deleteCheckListItem={deleteCheckListItem}
                         checkList={checkList}
                         checkListId={checkList.id}
                         onSubmit={(value) => addCheckListItem(checkList.id, value)}
@@ -180,21 +250,22 @@ const TodoModal = (props) => {
               <div className='TodoModal_box_title'>
                 <p>Label</p>
               </div>
-              {
-                props.boardsList.map((t) => t.cards.map((i) =>
-                  i.labels?.map((item, index) =>
-                    <Labels
-                      key={index + item.text}
-                      openLabelModal={openLabelModal} 
-                      setOpenLabelModal={setOpenLabelModal}
-                      color={index + item.color}
-                      text={item.text}
-                      style={{ backgroundColor: item.color, color: "#fff" }}
-                    />
-                  )
-                )
-                )
-              }
+              <div className="cardinfo_box_labels">
+             {
+              props.boardsList.map((t) => t.cards.map((i) => i.labels.map((item,index)=>
+             
+              <label
+                key={index}
+                style={{ backgroundColor: item.color, color: "#fff" }}
+              >
+                {item.text}
+                <FontAwesomeIcon icon={faXmark}  />
+              </label>
+
+             )))
+             }
+     
+          </div>
               <ul>
                 {
                   colors.map((item, index) => (
@@ -208,8 +279,12 @@ const TodoModal = (props) => {
               </ul>
               <AddTitleBtn
                 text="label"
+                InputClass={"input2"}
                 placeholder="Enter Label"
                 buttonText="Save"
+                onSubmit={(value) =>
+                  addLabel({ color: selectedColor, text: value })
+                }
               />
             </div>
 

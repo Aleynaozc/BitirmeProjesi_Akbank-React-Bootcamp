@@ -10,7 +10,7 @@ import Card from '../Card/Card'
 
 
 const List = (props) => {
-  
+
   return (
     <>
       <div className="board">

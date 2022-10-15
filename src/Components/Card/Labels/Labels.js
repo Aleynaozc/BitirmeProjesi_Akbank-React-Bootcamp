@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+
+import '../Labels/Label.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Form, ModalHeader } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { faTag } from '@fortawesome/free-solid-svg-icons'
-import Form from 'react-bootstrap/Form';
-import '../Card.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ModalHeader } from 'react-bootstrap';
+import axios from 'axios';
+
 
 const Labels = (props) => {
+    const [label,setLabel]=useState([])
     const handleClose = () => {
         props.setOpenLabelModal(false)
 
     }
+    
+
     const labels = [
         {
             "id": 1,
@@ -29,40 +34,35 @@ const Labels = (props) => {
         }
     ]
     return (
-        <div  >
-            <Modal className='cl_title_modal ' size="sm" 
-            show={props.openLabelModal} onHide={handleClose} 
-            aria-labelledby="example-modal-sizes-title-sm">
-                <ModalHeader closeButton></ModalHeader>
-                <Modal.Body >
-                    <Form>
-                            <div className="todoModal_check_list">
-                                    {labels.map((item) =>
-                                    (
-                                        <div className='todoModal_check_list_checkbox'>
-                                            <input
-                                                type="checkbox"
-                                                defaultChecked=""
-                                            /><span className="completed" >{item.title}</span>
-                                            <FontAwesomeIcon icon={faTag} />
-                                        </div>
-                                    )
-                                    )}
-                              
-                        </div>
+        <Modal className='label_modal' show={props.openLabelModal} onHide={handleClose} size="sm" aria-labelledby="example-modal-sizes-title-sm">
+            <ModalHeader closeButton></ModalHeader>
+            <Modal.Body >
+                <Form>
+                    <Form.Group >
+                        {labels.map((i) =>
 
-                    </Form>
+                            <div className='label_body'>
+                                <div className='labels_item'>
+                                    <input type="checkbox" />
+                                    <p>{i.title} </p>
+                                </div>
+                            </div>
+                        )
+
+                        }
 
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+                    </Form.Group>
 
-        </div >
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button className='label_btn' onClick={handleClose}>
+                    Save
+                </Button>
+            </Modal.Footer>
+        </Modal>
+
     )
 }
 
