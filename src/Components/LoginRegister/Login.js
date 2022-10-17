@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { SignInValidationScheme } from '../../services/Utils/Forms/Login/validationScheme';
 import { authCreateToken } from '../../services/store/auth/createToken';
 
+
+
 const Login = () => {
 
     const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Login = () => {
                     onSubmit={(values, { resetForm }) => {
                         _login(values);
                         resetForm();
-
+                        navigate("/board")
 
                     }}
                 >
@@ -59,7 +61,7 @@ const Login = () => {
                                 />
                                 {errors.password && touched.password ? <small>{errors.password}</small> : null}
 
-                                <button className="login_register_btn" type="submit" onClick={() => navigate("/boardpage")} >Login</button>
+                                <button className="login_register_btn" type="submit" onClick={() => navigate("/board")} >Login</button>
 
                                 <Link to="/register" className='register_link'>
                                     Kayıt ol

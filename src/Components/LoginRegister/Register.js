@@ -1,40 +1,42 @@
 
 import axios from 'axios';
 import { Form, Formik } from 'formik';
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { userRegister } from '../../services/store/auth/createToken';
 import { SignUpModel } from '../../services/Utils/Forms/Register/SignUpModel';
 import { SignUpValidationScheme } from '../../services/Utils/Forms/Register/validationScheme';
 import '../LoginRegister/LoginRegister.css'
 
 const Register = () => {
     const navigate = useNavigate();
-    
+
+    const [user, setUser] = useState({
+        username: "",
+        password: "",
+        passwordConfirm: "",
+      });
+      const dispatch = useDispatch();
+
+      const { username, password, passwordConfirm } = user;
+      const handleChange = (e) => {
+        setUser({
+          ...user,
+          [e.target.name]: e.target.value,
+        });
+      };
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const registerData = user;
+        dispatch(userRegister(registerData))
+        
+      };
     return (
         <div className="container">
             <div className='login__container'>
                 <div className="login-register-title">Register</div>
-                <Formik
-                    initialValues={SignUpModel}
-                    validationSchema={SignUpValidationScheme}
-                    onSubmit={(values, { resetForm }) => {
-
-                        axios.post("http://localhost:80/auth/register",
-                            {
-                                username: values.username,
-                                password: values.password,
-                                passwordConfirm: ""
-                            }
-
-                        ).then((response) => console.log(response.data))
-
-                        resetForm();
-                    }
-
-                    }
-                >
-                    {({
-                        errors, touched, handleChange,values,handleSubmit }) => (
+               
                         <form onSubmit={handleSubmit} >
 
                             <div className="inputs">
@@ -44,7 +46,7 @@ const Register = () => {
                                     placeholder="User Name"
                                     name='username'
                                     onChange={handleChange}
-                                    value={values.username}
+                                    value={username}
                                 />
                                 <label>PASSWORD</label>
                                 <input
@@ -53,9 +55,9 @@ const Register = () => {
                                     name="password"
                                     placeholder="Password"
                                     onChange={handleChange}
-                                    value={values.password}
+                                    value={password}
                                 />
-                                {errors.password && touched.password ? <small>{errors.password}</small> : null}
+                              
                                 <label>CONFIRM PASSWORD</label>
                                 <input
                                     type="password"
@@ -63,15 +65,17 @@ const Register = () => {
                                     className='_inputs'
                                     placeholder="Confirm Password"
                                     onChange={handleChange}
-                                    value={values.passwordConfirm}
+                                    value={passwordConfirm}
                                 />
-                                {errors.password && touched.password ? <small>{errors.password}</small> : null}
+                                <button type="submit" className="login_register_btn"  >Register</button>
+                                <Link to="/login" className='login_link'>
+                                <small   stle={{float:"left"}}>Giriş yap</small>
+                                </Link>
+                               
 
-                                <button type="submit" className="login_register_btn" onClick={() => navigate('/login')}>Register</button>
-                            
                             </div>
                         </form>
-                    )}</Formik>
+               
 
             </div>
         </div>

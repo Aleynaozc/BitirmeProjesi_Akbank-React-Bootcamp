@@ -1,3 +1,6 @@
+:root{
+    --background-color: rgb(173, 106, 221) ;
+}
 .cl_title_modal .modal-content{
     background-color: #8160bd!important;
     color:white;
@@ -47,7 +50,7 @@
 
 }
 .cLtitle_btn{
-    background-color: rgb(173, 106, 221);
+    background-color:var(--background-color);
     border-radius: 10px;
     border: none;
     padding:10px;
@@ -79,7 +82,7 @@
 .cLitem_btn{
     border-radius: 10px;
     padding:10px;
-    background-color:  rgb(173, 106, 221);
+    background-color: var(--background-color);
     border:none;
     color:white;    
  
@@ -117,7 +120,7 @@
 }
 .clistItem_icons{
     font-size: 20px;
-    color: rgb(173, 106, 221);
+    color:var(--background-color);
     cursor:pointer;
 }
 .todomodal_checklist_checkbox .completed {

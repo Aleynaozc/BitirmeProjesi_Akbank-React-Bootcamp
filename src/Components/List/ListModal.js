@@ -11,9 +11,7 @@ const ListModal = (props) => {
     }
     
   };
-
   return (
-
     props.openModal &&
     (
       <>
@@ -26,7 +24,6 @@ const ListModal = (props) => {
                 name="title"
                 value={inputText}
                 onChange={(event) => setInputText(event.target.value)}
-                
               />
             </div>
             <button type="submit" className='add_todo_button'>Add</button>

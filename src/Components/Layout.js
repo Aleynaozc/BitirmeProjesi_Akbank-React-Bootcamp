@@ -5,7 +5,7 @@ import Header from '../Components/Common/Header/Header'
 function Layout() {
   return (
     <>
-    <Header />
+  
     <div className='container-fluid p-0'>
     <Outlet/>
    

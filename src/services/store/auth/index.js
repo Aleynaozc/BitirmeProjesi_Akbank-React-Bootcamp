@@ -7,19 +7,19 @@ const authStore = createSlice({
   name: "auth",
   initialState: {
     isLoading:false,
-    token:undefined,
+    user:undefined,
     error:null,
   },
   reducers: {},
   extraReducers: {
     [authCreateToken.fulfilled]: (state,action) => {
       state.isLoading = true;
-      state.token=action.payload;
+      state.user=action.payload;
      
     },
     [authCreateToken.rejected]: (state,action) => {
       state.isLoading = false;
-      state.token=undefined;
+      state.user=undefined;
       state.error=action.error.message;
 
     },

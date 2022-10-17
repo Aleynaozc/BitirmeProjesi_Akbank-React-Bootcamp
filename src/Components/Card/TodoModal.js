@@ -1,5 +1,5 @@
-import React, {  useEffect, useState } from 'react'
-import { faCalendar,faTag, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useState } from 'react'
+import { faCalendar, faTag, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faMessage, faSquareCheck } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Button from 'react-bootstrap/Button';
@@ -21,32 +21,24 @@ const TodoModal = (props) => {
   const [openCheckListModal, setOpenCheckListModal] = useState(false)
   const [openLabelModal, setOpenLabelModal] = useState(false)
   const [openCalendarModal, setOpenCalendarModal] = useState(false)
-  const [label,setLabel]=useState([])
+  const [label, setLabel] = useState([])
   async function getAllData() {
-   try{
-    const response= await axios.get("http://localhost:80/label");
-    const data=response.data;
-    console.log(data)
-   }catch (error){
-    console.log(error.response)
-   }
-   
+    try {
+      const response = await axios.get("http://localhost:80/label");
+      const data = response.data;
+      console.log(data)
+    } catch (error) {
+      console.log(error.response)
+    }
+
   }
-   useEffect(()=>{
+  useEffect(() => {
     getAllData()
-   },[])
-
-
-
-
-
-
-
-
+  }, [])
 
   const addCheckList = (value) => {
-    props.boardsList.map((i) => {
-      i.cards.map((t) => {
+    props.boardsList.map((board) => board.list.map((list) => {
+      list.cards.map((t) => {
         if (t.id == id) {
           const checkLists = {
             id: uuidv4(),
@@ -58,49 +50,52 @@ const TodoModal = (props) => {
         }
       }
       )
-
-    })
+    }))
 
   };
 
 
   const addCheckListItem = (checkLId, value) => {
-    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
-      if (k.cardId === i.id) {
-        const checkListItems = {
-          id: uuidv4(),
-          text: value,
-          isChecked: false,
-          checkListId: checkLId,
-        };
-        k.checkListItem = [...k.checkListItem, checkListItems]
-      }
-    })))
+    props.boardsList.map((board) => board.list.map((list) =>
+      list.cards.map((card) =>
+        card.checkList.map(checkList => {
+          if (checkList.cardId === card.id) {
+            const checkListItems = {
+              id: uuidv4(),
+              text: value,
+              isChecked: false,
+              checkListId: checkLId,
+            };
+            checkList.checkListItem = [...checkList.checkListItem, checkListItems]
+          }
+        }))))
 
   }
 
   const deleteCheckListItem = (id) => {
-    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
-      if (k.cardId === i.id) {
-        const newCheckListItem = k.checkListItem.filter((checkListItem) =>
+    props.boardsList.map((board) => 
+    board.list.map((list)=>
+    list.cards.map((card) => card.checkList.map(checkList => {
+      if (checkList.cardId === card.id) {
+        const newCheckListItem = checkList.checkListItem.filter((checkListItem) =>
           checkListItem.id !== id)
 
-        k.checkListItem = newCheckListItem
+          checkList.checkListItem = newCheckListItem
       }
-    })))
+    }))))
 
   }
 
-  const addLabel = (color,label) => {
+  const addLabel = (color, label) => {
 
-    props.boardsList.map((t) => t.cards.map((i) => {
-      const labelsItem = {
-        id: uuidv4(),
-        color: color,
-        text: label
-      };
-      i.labels = [...i.labels, labelsItem]
-    }))
+    // props.boardsList.map((t) => t.cards.map((i) => {
+    //   const labelsItem = {
+    //     id: uuidv4(),
+    //     color: color,
+    //     text: label
+    //   };
+    //   i.labels = [...i.labels, labelsItem]
+    // }))
   };
 
 
@@ -121,25 +116,25 @@ const TodoModal = (props) => {
   //PROGRESS BAR
 
   const calculatePercent = () => {
-    props.boardsList.map((t) => t.cards.map((i) => i.checkList.map(k => {
-
-      if (!k.checkListsItem?.length) return 0;
-      const isChecked = k.checkListsItem?.filter((item) => item.isChecked)?.length;
-      return (isChecked / k.checkListsItem?.length) * 100;
-    })))
+    props.boardsList.map((board) => 
+    board.list.map((list)=>
+    list.cards.map((card) =>
+     card.checkList.map(checkList => {
+      if (!checkList.checkListsItem?.length) return 0;
+      const isChecked = checkList.checkListsItem?.filter((item) => item.isChecked)?.length;
+      return (isChecked / checkList.checkListsItem?.length) * 100;
+    }))))
 
   };
-  
 
+  //   const [post, setPost] = useState(null);
 
-//   const [post, setPost] = useState(null);
-
-// //  useEffect(() => {
-// //     axios.get('http://localhost:80/label').then((response) => {
-// //       setPost(response.data);
-// //     });
-// //   }, []);
-// // console.log(post)
+  // //  useEffect(() => {
+  // //     axios.get('http://localhost:80/label').then((response) => {
+  // //       setPost(response.data);
+  // //     });
+  // //   }, []);
+  // // console.log(post)
 
 
 
@@ -192,7 +187,7 @@ const TodoModal = (props) => {
                 <p>Title *</p>
               </div>
               <AddTitleBtn
-              InputClass={"input2"}
+                InputClass={"input2"}
                 text={maintitle}
                 defaultValue={"maintitle"}
                 placeholder="Enter Title"
@@ -206,7 +201,7 @@ const TodoModal = (props) => {
                 <p>Description</p>
               </div>
               <AddTitleBtn
-              InputClass={"input2"}
+                InputClass={"input2"}
                 text={"Enter Description"}
                 default={desc}
                 placeholder="Enter Description"
@@ -216,7 +211,9 @@ const TodoModal = (props) => {
 
             {/* CHECK LIST START */}
             <div className='checkList__container custom-scroll'>
-              {props.boardsList.map((t) => t.cards.map((card) =>
+              {props.boardsList.map((board) => 
+              board.list.map((list)=>
+              list.cards.map((card) =>
                 card.checkList.map((checkList, index) =>
                   <div className='checkList_box'>
                     <div key={index} className='TodoModal_box_title'>
@@ -242,7 +239,7 @@ const TodoModal = (props) => {
                       />
                     </div>
                   </div>
-                )))
+                ))))
               }
             </div>
             {/* CHECK LIST END */}
@@ -251,21 +248,23 @@ const TodoModal = (props) => {
                 <p>Label</p>
               </div>
               <div className="cardinfo_box_labels">
-             {
-              props.boardsList.map((t) => t.cards.map((i) => i.labels.map((item,index)=>
-             
-              <label
-                key={index}
-                style={{ backgroundColor: item.color, color: "#fff" }}
-              >
-                {item.text}
-                <FontAwesomeIcon icon={faXmark}  />
-              </label>
+                {/* {
+                  props.boardsList.map((t) =>
+                   t.cards.map((i) =>
+                    i.labels.map((item, index) =>
 
-             )))
-             }
-     
-          </div>
+                    <label
+                      key={index}
+                      style={{ backgroundColor: item.color, color: "#fff" }}
+                    >
+                      {item.text}
+                      <FontAwesomeIcon icon={faXmark} />
+                    </label>
+
+                  )))
+                } */}
+
+              </div>
               <ul>
                 {
                   colors.map((item, index) => (

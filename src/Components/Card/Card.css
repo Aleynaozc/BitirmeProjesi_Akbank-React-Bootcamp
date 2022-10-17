@@ -1,3 +1,6 @@
+:root{
+  --backgroundC:#8160bd;
+}
 .todo_list_container {
   margin-top: 10px;
   background-color:#dac9f9;
@@ -19,7 +22,7 @@
 }
 
 .modal-header {
-  background-color: #8160bd;
+  background-color: var(--backgroundC);
 }
 
 .todo_modal_container {
@@ -61,7 +64,7 @@
 }
 
 .btn-primary {
-  background-color: #8160bd !important;
+  background-color: var(--backgroundC) !important;
 }
 
 .desc_inp {
@@ -85,7 +88,7 @@
 }
 
 .date_of_todo {
-  background-color: #8160bd;
+  background-color: var(--backgroundC);
   padding: 5px;
   margin-right: 10px;
 
