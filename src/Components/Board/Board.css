@@ -1,0 +1,48 @@
+.card-text{
+
+}
+.addBorder-card {
+    margin-left:50px;
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 20px;
+    padding: 20px;
+    height: 180px;
+    font-size: 20px;
+    color:rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fec6e193;
+    cursor: pointer;
+
+}
+.deleteBoardBtn{
+    float: left;
+    position: relative;
+    left: 210px;
+    top:20px;
+    color:rgb(151, 0, 0);
+    cursor: pointer;
+}
+.addBorder-card-body{
+    white-space: nowrap;
+  overflow: auto;
+  text-overflow: ellipsis;
+}
+.custom-scroll2::-webkit-scrollbar {
+  width: 8px;
+  height: 3px;
+  
+}
+
+.custom-scroll2::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  background-color: rgb(181, 180, 183);
+  
+}
+
+.custom-scroll2::-webkit-scrollbar-thumb:hover {
+  border: 1px solid gray;
+}

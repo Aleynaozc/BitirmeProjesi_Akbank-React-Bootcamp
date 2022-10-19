@@ -9,7 +9,10 @@ import Card from '../Card/Card'
 
 
 
+
 const List = (props) => {
+
+
   return (
     <>
       <div className="board">
@@ -23,36 +26,38 @@ const List = (props) => {
         <h5 className="card-title">{props.list?.title}</h5>
         <div className='board-body  custom-scroll'>
 
-          {props.list?.cards?.map((card, index) => (
+          {
+          props.getCardData.map((card, index) =>
+           ( card.listId === props.list.id ?
             <Draggable
-              key={card.id}
-              draggableId={String(card.id)}
-              index={index}
-            >
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  style={{
-                    ...provided.draggableProps.style,
-                    opacity: snapshot.isDragging ? '0.5' : '1'
-                  }}
-                  className='todo_list_container custom-scroll'
-                >
-                  <Card
-                    setBoards={props.setBoards}
-                    boardsList={props.boardsList}
-                    key={card.id}
-                    boardId={props.list.id}
-                    card={card}
-                    removeCard={props.removeCard}
-                  />
-                </div>
-
-              )}
-
-            </Draggable>
+            key={card.id}
+            draggableId={String(card.id)}
+            index={index}
+          >
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                style={{
+                  ...provided.draggableProps.style,
+                  opacity: snapshot.isDragging ? '0.5' : '1'
+                }}
+                className='todo_list_container custom-scroll'
+              >
+                <Card
+                handleGetCard={props.handleGetCard}
+                  setBoards={props.setBoards}
+                  boardsList={props.boardsList}
+                  key={card.id}
+                  boardId={props.list.id}
+                  card={card}
+                  removeCard={props.removeCard}
+                />
+              </div>
+            )}
+          </Draggable>
+            :""
 
           ))}
         </div>

@@ -24,7 +24,7 @@ const AddTitleBtn = (props) => {
                     <form onSubmit={submission} className={`editable_edit ${props.editClass ? props.editClass : ""}`}>
                         <input
                             type="text"
-                            name='maintitle'
+                            name='title'
                             placeholder={props.placeholder || props.text}
                             className={`add-todo-title_inp ${props.InputClass ? props.InputClass : ""}`}
                             value={inputText}

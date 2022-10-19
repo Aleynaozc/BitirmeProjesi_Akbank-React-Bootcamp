@@ -7,6 +7,43 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import { Provider } from 'react-redux'
 import  store  from './services/store'
+import axios from 'axios';
+
+axios.interceptors.request.use(
+  (config) => {
+    const {
+      auth: { token },
+    } = store.getState();
+    config.baseURL = "http://localhost:80/";
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    return config;
+  },
+  (error) => {
+    Promise.reject(error).then((r) => console.error(r));
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+    
+      
+      return;
+    }
+
+    if (error.response.status === 403) {
+      window.history.back();
+      return;
+    }
+
+    return error.response.data;
+  }
+);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

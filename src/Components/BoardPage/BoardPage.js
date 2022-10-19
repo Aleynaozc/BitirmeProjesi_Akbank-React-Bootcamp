@@ -7,128 +7,113 @@ import ListModal from '../List/ListModal';
 import List from '../List/List';
 
 import Header from '../Common/Header/Header';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
 
 
 const BoardPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [boards, setBoards] = useState([])
-  const [boardList,setBoardList]=useState([])
-  const [editTitle, setEditTitle] = useState('Board Title')
+
+  const [board, setboard] = useState({ title: "" });
+  const [lists, setLists] = useState({
+    title: "",
+    boardId: "",
+  })
+  const [getList, setGetList] = useState([])
+  const [getCardData, setgetCardData] = useState([])
 
 
- 
 
-  const uniqueIdGenerator = () => {
-    return Math.floor(Math.random() * 100000 + 1);
+
+  const params = useParams();
+
+  //ADD BOARD
+  const handleBoardChange = (e) => {
+    setboard({
+      ...board,
+      [e.target.name]: e.target.value,
+    });
   };
 
 
-  // ADD BOARD
-  const handleAddBoard = (title) => {
-    setBoards([
-      ...boards,
-      {
-        id: uniqueIdGenerator(),
-        title,
-        ownerId: "",
-        list: [],
-      }
-    ])
-  }
 
+  const navigate = useNavigate()
 
-  const handleAddList = (title) => {
-
-    setBoards(
-      boards.map((item) =>
-        item.id
-          ? {
-            ...item,
-            list: [
-              ...item.list,
-              {
-                id: uniqueIdGenerator(),
-                title,
-                boardId: item.id,
-                cards: [],
-              }
-            ]
-          }
-          : { ...item }
-      ))
-
-
-  }
- 
-
-  const handleAddCard = (id, maintitle) => {
-    boards.map((t) => t.list.map((i) =>  {
-      if (i.id === id) {
-        const listCard = {
-          id: uniqueIdGenerator(),
-          maintitle,
-          listId: i.id,
-          desc: "",
-          date: "",
-          checkList: [],
-          labels: [],
-          comments: [],
-        };
-        i.cards = [...i.cards, listCard]
-      }
-    }))
-
-  }
-
-
-
-
-  // const handleAddCard = (id, maintitle) => {
-
-  //   setBoards(
-  //     boards.map((item) =>
-  //       item.id === id
-  //         ? {
-  //           ...item,
-  //           cards: [
-  //             ...item.cards,
-  //             {
-  //               id: uniqueIdGenerator(),
-  //               maintitle,
-  //               boardId: id,
-  //               desc: "",
-  //               date: "",
-  //               checkList: [],
-  //               labels: [],
-  //               comments: [],
-  //             }
-  //           ]
-  //         }
-  //         : { ...item }
-  //     ))
-  // }
-
-
-
-  const removeList = (listId) => {
-    const newList = boards.map((board) => {
-      board.list = board.list.filter((item) => item.id !== listId);
-      return board
+  const handleBoardSubmit = () => {
+    const boardData = board;
+    axios.post("/board", boardData
+    ).then((response) => {
+      setboard(response.data);
+      navigate(`/boardpage/${response.data.id}/${response.data.title}`)
     }
     )
-    setBoards(newList);
+
+
+  };
+console.log(board)
+
+  const handleAddList = async (event) => {
+    event.preventDefault();
+    await axios.post("list", {
+      title: lists.title,
+      boardId: Number(params.id)
+    })
+      .then((res) => {
+        console.log(res.data);
+      }
+      )
+    getListData()
   }
-
-
-  const removeCard = (cardId) => {
-    const newCardList = boards.map((board) => 
-      board.list.map((lists)=>{
-        lists.cards = lists.cards.filter((item) => item.id !== cardId)
-        return lists
-      })
-     
+console.log(lists)
+  // Get LIST
+  const getListData = async () => {
+    await axios.get(`list?boardId=${params.id}`).then((response) => {
+      setGetList(response.data);
+    }
     )
-    setBoards(newCardList);
+  };
+  const handleListChange = (e) => {
+    setLists({
+      ...lists,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const removeList = async (id) => {
+    await axios.delete("list/" + id);
+    getListData()
+
+  };
+
+
+  //CARD ADD
+  const handleAddCard = async (id, title) => {
+
+    await axios.post("card", {
+      title: title,
+      listId: id
+    })
+      .then((res) => {
+        console.log(res.data);
+      }
+      )
+    handleGetCard()
+  }
+  const removeCard = async (id) => {
+    await axios.delete("card/" + id);
+    handleGetCard()
+  };
+
+  const handleGetCard = async () => {
+    await axios.get("card").then((response) => {
+      setgetCardData(response.data);
+    }
+    )
+
   }
 
 
@@ -136,11 +121,15 @@ const BoardPage = () => {
 
 
   useEffect(() => {
-    localStorage.setItem("BoardsList", JSON.stringify(boards));
-  }, [boards]);
-  
+    localStorage.setItem("BoardsList", JSON.stringify(board));
+  }, [board]);
 
 
+  useEffect(() => {
+    getListData();
+    handleGetCard();
+
+  }, []);
 
   const onDragEnd = result => {
 
@@ -149,12 +138,12 @@ const BoardPage = () => {
     const { source, destination } = result
 
     if (source.droppableId !== destination.droppableId) {
-      const sourceColIndex = boards.map((i)=>i.list.findIndex(e => e.id === Number(source.droppableId)))
-      const destinationColIndex = boards.map((i)=>i.list.findIndex(e => e.id === Number(destination.droppableId)))
+      const sourceColIndex = boards.map((i) => i.list.findIndex(e => e.id === Number(source.droppableId)))
+      const destinationColIndex = boards.map((i) => i.list.findIndex(e => e.id === Number(destination.droppableId)))
 
-      const sourceCol = boards.map((i)=>i.list=[sourceColIndex])
-      const destinationCol =boards.map((i)=>i.list=[destinationColIndex]) 
- 
+      const sourceCol = boards.map((i) => i.list = [sourceColIndex])
+      const destinationCol = boards.map((i) => i.list = [destinationColIndex])
+
       const sourceTask = [...sourceCol.cards]
 
       const destinationTask = [...destinationCol.cards]
@@ -170,14 +159,11 @@ const BoardPage = () => {
   }
 
 
-
- 
-
-
   return (
     <>
-      <Header onSubmit={handleAddBoard}></Header>
+      <Header  handleChange={handleBoardChange} handleSubmit={handleBoardSubmit} board={board}></Header>
       <div className="addList_btn_box">
+
         <button
           type="text"
           className="addList__button"
@@ -194,35 +180,48 @@ const BoardPage = () => {
 
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='add-list__container'>
-          {boards.map((board) => board.list?.map((list) => (
-            <Droppable
-              key={String(list.id)}
-              droppableId={String(list.id)}>
-              {(provided) => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  <List
-                    key={list.id}
-                    list={list}
-                    boardsList={boards}
-                    setBoards={setBoards}
-                    addCard={handleAddCard}
-                    removeList={removeList}
-                    removeCard={removeCard}
-                  />
-                  {provided.placeholder}
-                </div>
+          {getList.map((list) =>
+          (
+            list.boardId === Number (params.id) ?
 
-              )
-              }
 
-            </Droppable>
+              <Droppable
+                key={String(list.id)}
+                droppableId={String(list.id)}>
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    <List
+                      getCardData={getCardData}
+                      list={list}
+                      addCard={handleAddCard}
+                      handleGetCard={handleGetCard}
+                      removeList={removeList}
+                      removeCard={removeCard}
+                    />
+                    {provided.placeholder}
+                  </div>
 
-          )))}
+                )
+                }
 
-          <ListModal onSubmit={handleAddList} openModal={openModal} setOpenModal={setOpenModal} />
+              </Droppable>
+              : ""
+          )
+
+
+          )}
+
+          <ListModal
+            handleAddList={handleAddList}
+            lists={lists}
+            handleListChange={handleListChange}
+            openModal={openModal}
+            setOpenModal={setOpenModal} 
+            board={board}
+            />
 
         </div>
 

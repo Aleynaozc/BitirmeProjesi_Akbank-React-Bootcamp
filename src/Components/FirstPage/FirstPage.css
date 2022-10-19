@@ -17,21 +17,7 @@
   border-radius: 50px;
   background-image: linear-gradient(to right,#9abcef,#8160bd);
 }
-.addBorder-card {
-    margin-left:50px;
-    width: 200px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-    padding: 20px;
-    height: 180px;
-    font-size: 20px;
-    color:rgb(255, 255, 255);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fec6e193;
 
-}
 .addBorder-card_icon {
     font-size: 50px;
     display: flex;

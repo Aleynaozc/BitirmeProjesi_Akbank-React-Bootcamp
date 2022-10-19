@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../Header/Header.css';
-import { faChartBar, faPen, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faChartBar, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+
 const Header = (props) => {
   const [edit, setEdit] = useState(false)
-  const [inputText, setInputText] = useState("");
-  const submission = (e) => {
-    e.preventDefault();
-    if (inputText && props.onSubmit) {
-      props.onSubmit(inputText);
-      setInputText("")
-      setEdit(false)
-    }
+  const params = useParams();
+  const { title, id } = props.board
+  const navigate = useNavigate()
+ 
+  const handleTitleSubmit = () => {
 
-  };
+    props.handleSubmit()
+    setEdit(false)
+  }
+  const UpdateBoardTitle = async() => {
+    // await axios.put("/board/" + params.id,{
+    //   title:title
+    // }).then((response) => {
+    //   console.log(response.data);
+     
+    // }
+    // )
+    // navigate(`/boardpage/${params.id}/${title}`)
+  }
+
   return (
     <div className='header_app'>
-      <Link to="/" className='link_style'>
+      <Link to="/board" className='link_style'>
         <button className='boards_btn'>
           <FontAwesomeIcon icon={faChartBar} className="chart_icon" />
           Boards
@@ -25,21 +37,35 @@ const Header = (props) => {
       </Link>
       {edit ?
         (
-          <form onSubmit={submission}>
+          <form
+            onSubmit=
+            {params.id ?
+              (UpdateBoardTitle) : (
+                handleTitleSubmit
+              )
+
+            }
+
+          >
             <input
               type="text"
-              name='editValue'
+              name='title'
               placeholder='Board Title'
-              value={inputText}
+              value={title}
+              defaultValue={params.title}
               className='editTitleInput'
-              onChange={(event) => setInputText(event.target.value)}
+              onChange={props.handleChange}
 
             />
             <button type='submit' className='cLtitle_btn'>Add</button>
 
           </form>
         ) : (
-          <button className='boards_btn'  onClick={() => setEdit(true)}> <FontAwesomeIcon icon={faPen} className="edit_icon" />{props.editTitle}</button>
+          params.title ?
+            (<button className='boards_btn' onClick={() => setEdit(true)}> <FontAwesomeIcon icon={faPen} className="edit_icon" />{params.title}</button>
+            ) : (
+              <button className='boards_btn' onClick={() => setEdit(true)}> <FontAwesomeIcon icon={faPen} className="edit_icon" />Add</button>
+            )
         )
       }
       <Link to="/">

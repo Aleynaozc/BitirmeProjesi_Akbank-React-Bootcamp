@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Card/Card.css'
 
 import Label from './Labels/Labels'
@@ -7,14 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { faClock, faComment, faSquareCheck, faSquareMinus } from '@fortawesome/free-regular-svg-icons';
 import TodoModal from './TodoModal';
+import axios from 'axios';
 
 const Card = (props) => {
     const [openTodoModal, setOpenTodoModal] = useState(false)
     const { id } = props.card;
+ 
+   const date =props.card?.createdAt.toString().slice(0,10)
+   console.log(date)
+
 
     return (
         <>
-            {<TodoModal   setBoards={props.setBoards}  boardsList={props.boardsList}  card={props.card} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} />}
+            {<TodoModal  handleGetCard={props.handleGetCard}     card={props.card} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} />}
            
             <div div className='todo_list_container' onClick={() => setOpenTodoModal(true)} >
                 <div>
@@ -28,13 +33,13 @@ const Card = (props) => {
                 <FontAwesomeIcon icon={faSquareMinus} className="closeBtn" onClick={() => props.removeCard(id)} />
 
                 <div className='todo_list_main_title'>
-                    <h6> {props.card?.maintitle}</h6>
+                    <h6> {props.card?.title}</h6>
                     <div className='card_footer'>
-                        {props.card?.date && (
+                        {date && (
                             <p className='date_of_todo'>
                                 <FontAwesomeIcon icon={faClock}
                                     style={{ marginRight: "6px" }} />
-                                {props.card?.date}
+                                {date}
                             </p>
                         )
                         }

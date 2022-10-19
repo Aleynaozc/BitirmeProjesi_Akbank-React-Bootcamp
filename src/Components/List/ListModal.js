@@ -1,32 +1,31 @@
-import React, { useRef, useState } from 'react'
+
+import React from 'react'
 import '../List/ListModal.css'
+import { ToastContainer, toast } from 'react-toastify';
 const ListModal = (props) => {
 
-  const [inputText, setInputText] = useState("");
-  const submission = (e) => {
-    e.preventDefault();
-    if (inputText && props.onSubmit) {
-      setInputText("")
-      props.onSubmit(inputText);
-    }
-    
-  };
+
+  const { title } = props.lists
+
   return (
-    props.openModal &&
+    props.openModal  && 
     (
       <>
+        
         <div className='add_todo__container'>
-          <form  onSubmit={submission}>
+       
+          <form onSubmit={props.handleAddList}>
             <div className="inputbox">
               <span>Title</span>
               <input
                 type="text"
                 name="title"
-                value={inputText}
-                onChange={(event) => setInputText(event.target.value)}
+                value={title}
+                onChange={props.handleListChange}
               />
             </div>
-            <button type="submit" className='add_todo_button'>Add</button>
+           
+            <button id="submitBtn" type='submit' className='add_todo_button'>Add</button>
           </form>
         </div>
       </>

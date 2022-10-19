@@ -6,6 +6,8 @@ import AddTitleBtn from '../../AddTitleBtn/AddTitleBtn';
 import '../CheckList/CheckList.css'
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 const CheckListTitle = (props) => {
+
+
   const handleClose=()=>{
     props.setOpenCheckListModal(false)
 

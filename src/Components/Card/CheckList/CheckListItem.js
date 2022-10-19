@@ -17,18 +17,18 @@ const CheckListItem = (props) => {
   return (
     <>
       <div className="todoModal_check_list_items_container">
-        {props.checkList.checkListItem.map((cLitem) =>
+        {props.checkList.items.map((cLitem) =>
         (
           <div className="todomodal_checklist_checkbox" key={cLitem.id}>
             <input
               type="checkbox"
               defaultChecked={cLitem.isChecked}
-            /><span className={cLitem.isChecked ? "completed" : ""}>{cLitem.text}</span>
+            /><span className={cLitem.isChecked ? "completed" : ""}>{cLitem.title}</span>
             <FontAwesomeIcon icon={faPen} className="clistItem_icons" /> 
             <FontAwesomeIcon 
             icon={faTrash} 
             className="clistItem_icons" 
-            onClick={()=>props.deleteCheckListItem(cLitem.id)}
+            onClick={()=>props.removeCheckListItem(cLitem.id)}
             />
           </div>
         ))
