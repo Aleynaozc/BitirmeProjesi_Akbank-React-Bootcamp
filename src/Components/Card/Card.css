@@ -1,9 +1,10 @@
-:root{
-  --backgroundC:#8160bd;
+:root {
+  --backgroundC: #8160bd;
 }
-.todo_list_container {
+
+.todo_card_container {
   margin-top: 10px;
-  background-color:#dac9f9;
+  background-color: #dac9f9;
   border-radius: 10px;
   padding: 10px;
 }
@@ -38,11 +39,13 @@
   color: white;
 
 }
-.hr_style{
+
+.hr_style {
   width: 50px;
-  height:5px;
+  height: 5px;
   border-radius: 10px;
 }
+
 .TodoModal_box {
   width: 100%;
   display: flex;
@@ -54,7 +57,7 @@
 .TodoModal_box_title {
   display: flex;
   gap: 10px;
-  
+
   align-items: center;
 }
 
@@ -117,7 +120,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding:20px;
+  padding: 20px;
 }
 
 .checkList_box_title {
@@ -164,24 +167,28 @@
   display: flex;
   gap: 10px;
 }
-.todoModal_check_list_checkbox input{
+
+.todoModal_check_list_checkbox input {
   width: 400px;
 }
+
 .todoModal_check_list_checkbox input,
 .todoModal_check_list_checkbox svg {
 
   outline: none;
   cursor: pointer;
 }
+
 .todoModal_check_list_checkbox svg {
-font-size: 24px;
- width: 30px;
+  font-size: 24px;
+  width: 30px;
 }
-.closeBtn2{
-  margin-top:5px;
-width:40px;
-font-size: 10px;
-height:35px;
+
+.closeBtn2 {
+  margin-top: 5px;
+  width: 40px;
+  font-size: 10px;
+  height: 35px;
 }
 
 .todoModal_check_list_checkbox p {
@@ -196,11 +203,13 @@ height:35px;
 .modal-sm {
   width: 200px !important;
 }
+
 .TodoModal_box ul {
   display: flex;
   gap: 15px;
   margin-left: 20px;
 }
+
 .TodoModal_box ul li {
   list-style: none;
   width: 20px;
@@ -212,40 +221,46 @@ height:35px;
 .TodoModal_box ul .li_active {
   box-shadow: 0 0 0 3px yellow;
 }
-.nbr{
+
+.nbr {
   position: relative;
-  bottom:5px;
- width: 20px;
- height: 20px;
+  bottom: 5px;
+  width: 20px;
+  height: 20px;
 
 }
-.displayBtn{
+
+.displayBtn {
   display: none;
 }
-.addListBtn{
+
+.addListBtn {
   width: 720px;
   display: flex;
-  
+
 
 }
-.btnPosClass{
-width: 40px;
-height: 35px;
-margin-top: 5px;
+
+.btnPosClass {
+  width: 40px;
+  height: 35px;
+  margin-top: 5px;
 }
-.inputClass{
+
+.inputClass {
   margin-right: 10px;
   background-color: #8160bd75;
   border-radius: 6px;
-  color:white;
+  color: white;
   display: flex;
 
 }
-.inputClass2{
+
+.inputClass2 {
   margin-right: 10px;
   background-color: #e1a4f3;
   border-radius: 6px;
-  color:white;
+  color: white;
 
   display: flex;
   justify-content: center;
@@ -253,75 +268,97 @@ margin-top: 5px;
   text-align: center;
 
 }
+
 .custom-scroll::-webkit-scrollbar {
   width: 8px;
-  
+
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 50px;
   border: 1px solid #ccc;
   background-color: rgb(55, 32, 97);
-  
+
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   border: 1px solid gray;
 }
 
-.board {
+.list {
   width: 300px;
-  background-color:#fbf5ff;
-  border:3px solid rgb(158, 123, 211);
+  background-color: #fbf5ff;
+  border: 3px solid rgb(158, 123, 211);
   padding: 20px;
   margin-right: 10px;
   margin-left: 4px;
   border-radius: 10px;
-  color:rgb(68, 29, 126);
-  
+  color: rgb(68, 29, 126);
+
 
 }
-.displyFlex{
+
+.displyFlex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.list_design{
-border-radius: 4px;
-border:1px solid rgb(188, 188, 188);
-padding:10px;
-width: 400px;
-margin-right: 19px;
-  
+
+.list_design {
+  border-radius: 4px;
+  border: 1px solid rgb(188, 188, 188);
+  padding: 10px;
+  width: 400px;
+  margin-right: 19px;
+
 }
-.displayClass{
+
+.displayClass {
   width: 10px;
   height: 10px;
 }
-.trashBtn{
+
+.trashBtn {
   display: none;
 }
-.showtrashBtn{
+
+.showtrashBtn {
   font-size: 30px;
   color: rgb(145, 66, 66);
   margin-top: 9px;
   display: block;
   cursor: pointer;
 }
-.checkList__container{
+
+.checkList__container {
   max-height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
 }
-.displayTextClass{
-  color:white;
+
+.displayTextClass {
+  color: white;
   width: 200px;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
 }
-.displayClass2{
+
+.displayClass2 {
   width: 200px;
   height: 80px;
+}
+
+.label_box {
+  width: 120px;
+  border-radius: 20px;
+  padding: 10px;
+
+}
+
+.label_box span {
+  position: relative;
+  left: 20px;
+
 }

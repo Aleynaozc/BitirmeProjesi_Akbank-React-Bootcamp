@@ -5,18 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListModal from '../List/ListModal';
 import List from '../List/List';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from '../Common/Header/Header';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
 
 
 const BoardPage = () => {
   const [openModal, setOpenModal] = useState(false)
   const [boards, setBoards] = useState([])
-
   const [board, setboard] = useState({ title: "" });
   const [lists, setLists] = useState({
     title: "",
@@ -27,21 +26,17 @@ const BoardPage = () => {
 
 
 
+  const navigate = useNavigate()
 
   const params = useParams();
 
-  //ADD BOARD
+  //BOARD
   const handleBoardChange = (e) => {
     setboard({
       ...board,
       [e.target.name]: e.target.value,
     });
   };
-
-
-
-  const navigate = useNavigate()
-
   const handleBoardSubmit = () => {
     const boardData = board;
     axios.post("/board", boardData
@@ -53,22 +48,26 @@ const BoardPage = () => {
 
 
   };
-console.log(board)
 
+  //  LIST
   const handleAddList = async (event) => {
     event.preventDefault();
-    await axios.post("list", {
-      title: lists.title,
-      boardId: Number(params.id)
-    })
-      .then((res) => {
-        console.log(res.data);
-      }
-      )
-    getListData()
+    if (!params.title) {
+      alert("Başlık Girin!")
+
+    } else {
+      await axios.post("list", {
+        title: lists.title,
+        boardId: Number(params.id)
+      })
+        .then((res) => {
+          console.log(res.data);
+        }
+        )
+      getListData()
+    }
+
   }
-console.log(lists)
-  // Get LIST
   const getListData = async () => {
     await axios.get(`list?boardId=${params.id}`).then((response) => {
       setGetList(response.data);
@@ -81,16 +80,13 @@ console.log(lists)
       [e.target.name]: e.target.value,
     });
   };
-
-
   const removeList = async (id) => {
     await axios.delete("list/" + id);
     getListData()
 
   };
 
-
-  //CARD ADD
+  //CARD 
   const handleAddCard = async (id, title) => {
 
     await axios.post("card", {
@@ -115,21 +111,16 @@ console.log(lists)
     )
 
   }
-
-
-
-
-
-  useEffect(() => {
-    localStorage.setItem("BoardsList", JSON.stringify(board));
-  }, [board]);
-
-
-  useEffect(() => {
-    getListData();
-    handleGetCard();
-
-  }, []);
+  const handleUpdateCard = async (id, title) => {
+    await axios.put("card/" + id, {
+      title: title,
+      boardId: params.id
+    }).then((response) => {
+      console.log(response.data);
+    }
+    )
+    handleGetCard()
+  }
 
   const onDragEnd = result => {
 
@@ -138,30 +129,43 @@ console.log(lists)
     const { source, destination } = result
 
     if (source.droppableId !== destination.droppableId) {
-      const sourceColIndex = boards.map((i) => i.list.findIndex(e => e.id === Number(source.droppableId)))
-      const destinationColIndex = boards.map((i) => i.list.findIndex(e => e.id === Number(destination.droppableId)))
 
-      const sourceCol = boards.map((i) => i.list = [sourceColIndex])
-      const destinationCol = boards.map((i) => i.list = [destinationColIndex])
+      const sourceColIndex = getList.findIndex(e => e.id === Number(source.droppableId))
+      const destinationColIndex = getList.findIndex(e => e.id === Number(destination.droppableId))
 
-      const sourceTask = [...sourceCol.cards]
+      let sourceCol = getList[sourceColIndex]
 
-      const destinationTask = [...destinationCol.cards]
+      let destinationCol = getList[destinationColIndex]
 
-      const [removed] = sourceTask.splice(source.index, 1)
+      let newList = getList
+
+      let sourceTask = [...sourceCol.cards]
+
+      let destinationTask = [...destinationCol.cards]
+
+      const findedIndex = sourceCol.cards.findIndex(i => i.id === source.index)
+
+      let [removed] = sourceTask.splice(findedIndex, 1)
+
       destinationTask.splice(destination.index, 0, removed)
 
-      boards[sourceColIndex].cards = sourceTask
-      boards[destinationColIndex].cards = destinationTask
+      newList[sourceColIndex].cards = sourceTask
+      newList[destinationColIndex].cards = destinationTask
 
-      setBoards(boards)
+
+      setGetList(newList)
+
+
     }
   }
+  useEffect(() => {
+    getListData();
+    handleGetCard();
 
-
+  }, []);
   return (
     <>
-      <Header  handleChange={handleBoardChange} handleSubmit={handleBoardSubmit} board={board}></Header>
+      <Header handleChange={handleBoardChange} handleSubmit={handleBoardSubmit} board={board}></Header>
       <div className="addList_btn_box">
 
         <button
@@ -177,14 +181,12 @@ console.log(lists)
 
 
       </div>
-
+      
       <DragDropContext onDragEnd={onDragEnd}>
         <div className='add-list__container'>
           {getList.map((list) =>
           (
-            list.boardId === Number (params.id) ?
-
-
+            list.boardId === Number(params.id) ?
               <Droppable
                 key={String(list.id)}
                 droppableId={String(list.id)}>
@@ -200,6 +202,7 @@ console.log(lists)
                       handleGetCard={handleGetCard}
                       removeList={removeList}
                       removeCard={removeCard}
+                      handleUpdateCard={handleUpdateCard}
                     />
                     {provided.placeholder}
                   </div>
@@ -219,9 +222,9 @@ console.log(lists)
             lists={lists}
             handleListChange={handleListChange}
             openModal={openModal}
-            setOpenModal={setOpenModal} 
+            setOpenModal={setOpenModal}
             board={board}
-            />
+          />
 
         </div>
 

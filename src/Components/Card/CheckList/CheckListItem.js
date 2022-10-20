@@ -23,6 +23,7 @@ const CheckListItem = (props) => {
             <input
               type="checkbox"
               defaultChecked={cLitem.isChecked}
+              onChange={()=>props.updateCheckListItem(cLitem.id)}
             /><span className={cLitem.isChecked ? "completed" : ""}>{cLitem.title}</span>
             <FontAwesomeIcon icon={faPen} className="clistItem_icons" /> 
             <FontAwesomeIcon 

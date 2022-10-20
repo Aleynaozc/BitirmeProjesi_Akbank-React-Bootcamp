@@ -23,12 +23,12 @@
     cursor: pointer;
   
   }
-  .deleteBoard {
+  .deleteList {
     float: right;
     
   }
   
-  .deleteBoard .card-title {
+  .deleteList .card-title {
     margin-top: 0px;
     width: 250px;
     white-space: nowrap;
@@ -37,7 +37,7 @@
   
   }
   
-  .board-body {
+  .list-body {
     margin-top: 25px;
     max-height: 518px;
     padding: 10px;

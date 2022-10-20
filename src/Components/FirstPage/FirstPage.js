@@ -46,7 +46,7 @@ const FirstPage = () => {
 
   return (
     <div className='container mt-5'>
-      <h1 className="app_title">KANBON BOARD APP</h1>
+      <h1 className="app_title">KANBAN BOARD APP</h1>
       <div className="addBorder-card__container">
         <div className="addBorder-card">
           <div className="addBorder-card-body">

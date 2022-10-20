@@ -6,7 +6,6 @@ export const authCreateToken = createAsyncThunk(
   "auth/login",
   async (loginModel) => {
     const {data} = await axios.post("auth/login", loginModel);
-    console.log(data)
     return data;
   }
 );

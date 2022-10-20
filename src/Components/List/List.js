@@ -15,51 +15,52 @@ const List = (props) => {
 
   return (
     <>
-      <div className="board">
+      <div className="list">
         <div
-          className='deleteBoard'
+          className='deleteList'
           onClick={() => props.removeList(props.list?.id)}>
           <FontAwesomeIcon
             icon={faSquareMinus}
             className="closeBtn" />
         </div>
         <h5 className="card-title">{props.list?.title}</h5>
-        <div className='board-body  custom-scroll'>
+        <div className='list-body  custom-scroll'>
 
           {
-          props.getCardData.map((card, index) =>
-           ( card.listId === props.list.id ?
-            <Draggable
-            key={card.id}
-            draggableId={String(card.id)}
-            index={index}
-          >
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                style={{
-                  ...provided.draggableProps.style,
-                  opacity: snapshot.isDragging ? '0.5' : '1'
-                }}
-                className='todo_list_container custom-scroll'
+            props.getCardData.map((card, index) =>
+            (card.listId === props.list.id ?
+              <Draggable
+                key={String(card.id)}
+                draggableId={String(card.id)}
+                index={card.id}
               >
-                <Card
-                handleGetCard={props.handleGetCard}
-                  setBoards={props.setBoards}
-                  boardsList={props.boardsList}
-                  key={card.id}
-                  boardId={props.list.id}
-                  card={card}
-                  removeCard={props.removeCard}
-                />
-              </div>
-            )}
-          </Draggable>
-            :""
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    style={{
+                      ...provided.draggableProps.style,
+                      opacity: snapshot.isDragging ? '0.5' : '1'
+                    }}
+                    className='todo_card_container custom-scroll'
+                  >
+                    <Card
+                      handleGetCard={props.handleGetCard}
+                      setBoards={props.setBoards}
+                      boardsList={props.boardsList}
+                      key={card.id}
+                      boardId={props.list.id}
+                      card={card}
+                      removeCard={props.removeCard}
+                      handleUpdateCard={props.handleUpdateCard}
+                    />
+                  </div>
+                )}
+              </Draggable>
+              : ""
 
-          ))}
+            ))}
         </div>
         <div className='addacard_body'>
           <AddTitleBtn

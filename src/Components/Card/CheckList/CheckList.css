@@ -124,6 +124,6 @@
     cursor:pointer;
 }
 .todomodal_checklist_checkbox .completed {
-    background-color: #8160bd;
+    text-decoration: line-through;
   }
 

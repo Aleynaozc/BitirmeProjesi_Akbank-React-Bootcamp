@@ -16,14 +16,14 @@ import axios from 'axios';
 const TodoModal = (props) => {
 
 
-  const { id, title, date, desc, checklists, labels } = props.card;
-  const [selectedColor, setSelectedColor] = useState();
+  const { id, title, date, checklists, labels } = props.card;
+
   const [openCheckListModal, setOpenCheckListModal] = useState(false)
-  const [openLabelModal, setOpenLabelModal] = useState(false)
+
   const [openCalendarModal, setOpenCalendarModal] = useState(false)
-  const [label, setLabel] = useState([])
 
 
+  //CHECKLIST
   const addCheckList = async (title) => {
 
     await axios.post("checklist", {
@@ -34,90 +34,68 @@ const TodoModal = (props) => {
         console.log(res.data);
       }
       )
-      props.handleGetCard();
+    props.handleGetCard();
   }
 
-  const addCheckListItem = async (id,title) => {
+  const addCheckListItem = async (id, title) => {
 
     await axios.post("checklist-item", {
       title: title,
       checklistId: id,
-      isChecked:false
+      isChecked: false
     })
       .then((res) => {
         console.log(res.data);
       }
       )
-      props.handleGetCard();
+    props.handleGetCard();
   }
-
-
-
-
   const removeCheckListItem = async (id) => {
 
-    await axios.delete("checklist-item/" +id)
+    await axios.delete("checklist-item/" + id)
       .then((res) => {
         console.log(res.data);
       }
       )
-      props.handleGetCard();
+    props.handleGetCard();
   }
 
-  const addLabelList = async (title) => {
 
-    await axios.post("label", {
-      title: title,
-      cardId: id
-    })
-      .then((res) => {
-        console.log(res.data);
-      }
-      )
 
+
+  const updateCheckListItem = async (id) => {
+    await axios.put("checklist-item/" + id, {
+      isChecked: true,
+    }).then((response) => {
+      console.log(response.data);
+    }
+    )
+    props.handleGetCard();
   }
-  // useEffect(() => {
-  //   getAllData()
-  // }, [])
-
-
-
-
-
-
-
-
-
-
-  const colors = [
-    "#a8193d",
-    "#4fcc25",
-    "#1ebffa",
-    "#8da377",
-    "#9975bd",
-    "#cf61a1",
-    "#240959",
-  ];
-
 
   //PROGRESS BAR
 
+
   const calculatePercent = () => {
-    // props.boardsList.map((board) =>
-    //   board.list.map((list) =>
-    //     list.cards.map((card) =>
-    //       card.checkList.map(checkList => {
-    //         if (!checkList.checkListsItem?.length) return 0;
-    //         const isChecked = checkList.checkListsItem?.filter((item) => item.isChecked)?.length;
-    //         return (isChecked / checkList.checkListsItem?.length) * 100;
-    //       }))))
+
+    let count = 0;
+    checklists.map((cL) => cL.items.map(item => {
+
+      if (item.isChecked === true) {
+        count += 1;
+      }
+
+    }));
+    return count;
+
 
   };
 
+  useEffect(() => {
 
+  }, [])
 
-
-
+  console.log(labels)
   const handleClose = () => props.setOpenTodoModal(false);
 
   return (
@@ -127,8 +105,8 @@ const TodoModal = (props) => {
         openCalendarModal={openCalendarModal}
         setOpenCalendarModal={setOpenCalendarModal} />
       <Labels
-        openLabelModal={openLabelModal}
-        setOpenLabelModal={setOpenLabelModal}
+
+        labelData={props.labelData}
       />
 
       <Modal
@@ -168,29 +146,16 @@ const TodoModal = (props) => {
               <AddTitleBtn
                 InputClass={"input2"}
                 text={title}
+                onSubmit={props.handleUpdateCard}
                 defaultValue={title}
                 placeholder="Enter Title"
                 buttonText="Set Title"
               />
             </div>
 
-            {/* DESCRIPTION */}
-            <div className="TodoModal_box">
-              <div className='TodoModal_box_title'>
-                <p>Description</p>
-              </div>
-              <AddTitleBtn
-                InputClass={"input2"}
-                text={"Enter Description"}
-                default={desc}
-                placeholder="Enter Description"
-                buttonText="Save"
-              />
-            </div>
-
             {/* CHECK LIST START */}
             <div className='checkList__container custom-scroll'>
-              {checklists.map((checkList,index) =>
+              {checklists.map((checkList, index) =>
                 <div className='checkList_box'>
                   <div key={index} className='TodoModal_box_title'>
                     <FontAwesomeIcon icon={faSquareCheck} className="nbr" />
@@ -199,16 +164,16 @@ const TodoModal = (props) => {
                   <div className="todoModal__progress-bar">
                     <div
                       className="todoModal__progress"
-
                       style={{
-                        width: `${calculatePercent()}%`,
+                        width: `${calculatePercent() * 10}%`,
                         backgroundColor: calculatePercent() === 100 ? "blue" : "",
                       }}
                     />
                   </div>
                   <div className="todoModal_check_list ">
                     <CheckListItem
-                     removeCheckListItem={removeCheckListItem}
+                      updateCheckListItem={updateCheckListItem}
+                      removeCheckListItem={removeCheckListItem}
                       checkList={checkList}
                       checkListId={checkList.id}
                       onSubmit={(value) => addCheckListItem(checkList.id, value)}
@@ -227,43 +192,41 @@ const TodoModal = (props) => {
                 <p>Label</p>
               </div>
               <div className="cardinfo_box_labels">
-                {/* {
-                  props.boardsList.map((t) =>
-                   t.cards.map((i) =>
-                    i.labels.map((item, index) =>
+                {
+                  labels.map((item, index) =>
 
-                    <label
+                    <label className='label_box'
                       key={index}
                       style={{ backgroundColor: item.color, color: "#fff" }}
                     >
-                      {item.text}
-                      <FontAwesomeIcon icon={faXmark} />
+                      {item.title}
+                      <span ><FontAwesomeIcon icon={faXmark} onClick={() => props.removeLabelList(item.id)} /></span>
                     </label>
 
-                  )))
-                } */}
+                  )
+
+
+                }
 
               </div>
-              <ul>
-                {
-                  colors.map((item, index) => (
-                    <li
-                      key={index + item}
-                      style={{ backgroundColor: item }}
-                      className={selectedColor === item ? "li_active" : ""}
-                      onClick={() => setSelectedColor(item)} />
-                  ))
-                }
-              </ul>
-              <AddTitleBtn
-                text="label"
-                InputClass={"input2"}
-                placeholder="Enter Label"
-                buttonText="Save"
-              // onSubmit={(value) =>
-              //   addLabel({ color: selectedColor, text: value })
-              // }
-              />
+              <div className="cardinfo_box_labels">
+                <form>
+                  {
+
+                    props.labelData.map((item, index) =>
+                      <div className='label_body' key={index}>
+                        <div className='labels_item'>
+                          <input type="radio" name="lklş" />
+                          <p>{item.title} </p>
+                        </div>
+                      </div>
+                    )
+
+                  }
+                </form>
+
+              </div>
+
             </div>
 
 

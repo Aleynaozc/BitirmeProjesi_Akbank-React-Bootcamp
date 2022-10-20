@@ -12,20 +12,71 @@ import axios from 'axios';
 const Card = (props) => {
     const [openTodoModal, setOpenTodoModal] = useState(false)
     const { id } = props.card;
- 
-   const date =props.card?.createdAt.toString().slice(0,10)
-   console.log(date)
 
+    const date = props.card?.updatedAt.toString().slice(0, 10)
+
+
+    const [labelData, getLabelData] = useState([])
+
+
+    const handleGetLabel = async () => {
+        await axios.get("label").then((response) => {
+            getLabelData(response.data);
+        }
+        )
+
+    }
+
+    const addLabelList = async (title, id) => {
+
+        await axios.post("label", {
+            title: title,
+            cardId: id
+        })
+            .then((res) => {
+                console.log(res.data);
+            }
+            )
+        handleGetLabel()
+    }
+
+    const removeLabelList = async (id) => {
+
+        await axios.delete("card-label/" + id, {
+        })
+            .then((res) => {
+                console.log(res.data);
+            }
+            )
+        handleGetLabel()
+    }
+
+
+    useEffect(() => {
+        handleGetLabel()
+
+    }, []);
 
     return (
         <>
-            {<TodoModal  handleGetCard={props.handleGetCard}     card={props.card} openTodoModal={openTodoModal} setOpenTodoModal={setOpenTodoModal} />}
-           
-            <div div className='todo_list_container' onClick={() => setOpenTodoModal(true)} >
+            {
+                <TodoModal
+                    handleUpdateCard={(value) => props.handleUpdateCard(id, value)}
+                    handleGetCard={props.handleGetCard}
+                    card={props.card}
+                    openTodoModal={openTodoModal}
+                    setOpenTodoModal={setOpenTodoModal}
+                    addLabelList={(value) => addLabelList(id, value)}
+                    labelData={labelData}
+                    removeLabelList={removeLabelList}
+                />
+            }
+
+            <div div className='todo_card_container' onClick={() => setOpenTodoModal(true)} >
                 <div>
                     {
-                        props.card?.labels?.map((item, index) =>
-                            <hr className='hr_style' key={index} style={{ background: item.color , color: "#fff"}} />
+                        labelData.map((item, index) =>
+                            <hr className='hr_style' key={index} style={{ background: item.color, color: "#fff" }} />
                         )
 
                     }
